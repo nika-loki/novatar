@@ -1,5 +1,5 @@
 // Full avatar API inside Astro: svg / png / webp / gif / apng / json,
-// e.g. /api/avatar/justin.png?engine=squishmoji&shape=cat&size=256
+// e.g. /api/avatar/justin.png?engine=squish&shape=cat&size=256
 import type { APIRoute } from 'astro'
 import { createNovatarHandler } from 'novatar/server'
 

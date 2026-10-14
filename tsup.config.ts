@@ -18,6 +18,6 @@ export default defineConfig({
   minifyIdentifiers: false,
   external: ['react', 'sharp'],
   banner: {
-    js: `/*! novatar v0.1.0 | MIT | Engines ported from @usespaceui/avatars & @usespaceui/squishmoji (MIT, SpaceUI) */`,
+    js: `/*! novatar v0.2.0 | MIT | Avatar engines adapted from SpaceUI (MIT) */`,
   },
 })

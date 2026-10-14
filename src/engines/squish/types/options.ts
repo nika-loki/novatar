@@ -21,12 +21,12 @@ export const SquishOutputFormat = {
 
 export type SquishOutputFormat = (typeof SquishOutputFormat)[keyof typeof SquishOutputFormat]
 
-/** Alias for compatibility with @usespaceui/avatars */
+/** Compatibility alias */
 export const AvatarOutputFormat = SquishOutputFormat
 export type AvatarOutputFormat = SquishOutputFormat
 
 /**
- * Structured JSON representation of a generated squishmoji.
+ * Structured JSON representation of a generated squish.
  */
 export interface SquishJson {
   /** Deterministic identity seed. */
@@ -47,11 +47,11 @@ export interface SquishJson {
   layout: SquishLayout
 }
 
-/** Alias for compatibility with @usespaceui/avatars */
+/** Compatibility alias */
 export type AvatarJson = SquishJson
 
 /**
- * Options used to customize the deterministic generation of a squishmoji.
+ * Options used to customize the deterministic generation of a squish.
  */
 export interface SquishOptions {
   /** Deterministic avatar identity seed (used when passing a single options object). */

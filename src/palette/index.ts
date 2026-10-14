@@ -1,5 +1,5 @@
 /**
- * Deterministic palette generator vendored from @usespaceui/gradients (MIT, SpaceUI).
+ * Deterministic palette generator adapted from SpaceUI (MIT).
  * Kept bit-exact with upstream so avatars keep their exact colors:
  * same hash constants, same rng, same preset selection + rotation.
  */

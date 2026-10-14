@@ -11,7 +11,7 @@
 //   /api/avatar/orion.png       → PNG (Node runtime, deterministic)
 //   /api/avatar/orion.json      → JSON metadata + dataUri
 //   /api/avatar/styles          → machine-readable style catalog
-//   /api/avatar/orion?engine=squishmoji&shape=cat&expression=loving
+//   /api/avatar/orion?engine=squish&shape=cat&expression=loving
 import { createNovatarHandler } from 'novatar/server'
 
 export const GET = createNovatarHandler({ base: '/api/avatar' })

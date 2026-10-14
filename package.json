@@ -1,6 +1,6 @@
 {
   "name": "novatar",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Deterministic generative SVG avatar engine for humans and AI agents. CLI + MCP + React + HTTP, zero-config npx.",
   "author": {
     "name": "Justin Cheu",
@@ -19,7 +19,7 @@
   "keywords": [
     "avatar",
     "avatars",
-    "squishmoji",
+    "squish",
     "emoji",
     "svg",
     "procedural",
@@ -121,11 +121,11 @@
     "@types/node": "^26.6.5",
     "@types/react": "^19.2.18",
     "@usespaceui/avatars": "^0.1.4",
-    "@usespaceui/squishmoji": "^0.1.0",
     "playwright-core": "^1.64.0",
     "react": "^19.2.8",
     "tsup": "^8.0.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "@usespaceui/squishmoji": "^0.1.0"
   },
   "optionalDependencies": {
     "sharp": "^0.35.5"

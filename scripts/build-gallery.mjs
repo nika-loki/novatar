@@ -6,7 +6,7 @@ const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/
 
 const catalog = listNovatarStyles()
 const avatarsVariants = catalog.engines.find((e) => e.id === 'avatars').variants
-const shapes = catalog.engines.find((e) => e.id === 'squishmoji').shapes
+const shapes = catalog.engines.find((e) => e.id === 'squish').shapes
 
 // Vary expressions across the squish grid for a lively sample.
 const expressions = [
@@ -28,7 +28,7 @@ const avatarsTiles = avatarsVariants
 const squishTiles = shapes
   .map((shape, i) =>
     tile(
-      createNovatar({ seed: 'novatar', engine: 'squishmoji', shape, expression: expressions[i % expressions.length] }),
+      createNovatar({ seed: 'novatar', engine: 'squish', shape, expression: expressions[i % expressions.length] }),
       shape,
       expressions[i % expressions.length],
     ),
@@ -53,8 +53,8 @@ const fragment = `<div id="novatar-gallery">
   <p class="nt-note">seed <code>orion</code> · npx novatar orion --engine avatars --variant &lt;id&gt;</p>
   <div class="nt-grid">${avatarsTiles}</div>
   <hr />
-  <h2>squishmoji engine — 21 shapes × 22 expressions</h2>
-  <p class="nt-note">seed <code>novatar</code> · npx novatar novatar --engine squishmoji --shape &lt;id&gt; --expression &lt;id&gt;</p>
+  <h2>squish engine — 21 shapes × 22 expressions</h2>
+  <p class="nt-note">seed <code>novatar</code> · npx novatar novatar --engine squish --shape &lt;id&gt; --expression &lt;id&gt;</p>
   <div class="nt-grid">${squishTiles}</div>
 </div>`
 

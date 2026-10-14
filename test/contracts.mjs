@@ -5,7 +5,7 @@ import * as novatar from '../dist/index.js'
 import * as novatarReact from '../dist/react.js'
 import {
   createAvatar,
-  createSquishmoji,
+  createSquish,
   createNovatar,
   resolveVariant,
   resolveEngine,
@@ -75,17 +75,17 @@ const details = getAllAvatarDetails()
 assert.equal(details.length, 21, '21 avatar variants are catalogued')
 
 // ---------------------------------------------------------------------------
-// 2. Squishmoji engine contracts (ported from @usespaceui/squishmoji)
+// 2. Squish engine contracts (ported from @usespaceui/squish)
 // ---------------------------------------------------------------------------
 
-const defaultSquish = createSquishmoji()
-assert.equal(defaultSquish, createSquishmoji(), 'the default seed must be deterministic')
-assert.match(defaultSquish, /^<svg /, 'createSquishmoji returns an SVG string')
+const defaultSquish = createSquish()
+assert.equal(defaultSquish, createSquish(), 'the default seed must be deterministic')
+assert.match(defaultSquish, /^<svg /, 'createSquish returns an SVG string')
 
-const seedA = createSquishmoji('space-cadet')
-assert.equal(seedA, createSquishmoji('space-cadet'), 'same seed produces identical SVG')
+const seedA = createSquish('space-cadet')
+assert.equal(seedA, createSquish('space-cadet'), 'same seed produces identical SVG')
 
-const squishJson = createSquishmoji('space-cadet', {
+const squishJson = createSquish('space-cadet', {
   shape: 'cat',
   expression: 'loving',
   format: SquishOutputFormat.json,
@@ -129,9 +129,9 @@ for (const [shape, expression, background] of [
   ['ufo', 'amazed', 'maia'],
   ['star', 'sleepy', 'alcyone'],
 ]) {
-  const ours = createSquishmoji('space-cadet', { shape, expression, backgroundStyle: background, size: 256 })
+  const ours = createSquish('space-cadet', { shape, expression, backgroundStyle: background, size: 256 })
   const theirs = upstreamSquish.createAvatar('space-cadet', { shape, expression, backgroundStyle: background, size: 256 })
-  assert.equal(ours, theirs, `squishmoji parity: ${shape}/${expression}/${background}`)
+  assert.equal(ours, theirs, `squish parity: ${shape}/${expression}/${background}`)
 }
 
 // Vendored palette parity
@@ -151,15 +151,15 @@ for (const seed of ['a', 'orion', 'deep-space-9', 'Ünïcödé']) {
 const SUNSET = ['#ff9a3c', '#ff5c8a', '#c13584', '#701a75', '#fde68a']
 const OCEAN = ['#7dd3fc', '#38bdf8', '#0284c7', '#1e3a8a', '#082f49']
 
-// squishmoji: custom colors recolor, geometry stays seed-driven
+// squish: custom colors recolor, geometry stays seed-driven
 {
-  const seeded = createSquishmoji('palette-demo', { shape: 'cat', expression: 'loving' })
-  const sunset = createSquishmoji('palette-demo', { shape: 'cat', expression: 'loving', colors: SUNSET })
-  const sunsetAgain = createSquishmoji('palette-demo', { shape: 'cat', expression: 'loving', colors: SUNSET })
-  const ocean = createSquishmoji('palette-demo', { shape: 'cat', expression: 'loving', colors: OCEAN })
+  const seeded = createSquish('palette-demo', { shape: 'cat', expression: 'loving' })
+  const sunset = createSquish('palette-demo', { shape: 'cat', expression: 'loving', colors: SUNSET })
+  const sunsetAgain = createSquish('palette-demo', { shape: 'cat', expression: 'loving', colors: SUNSET })
+  const ocean = createSquish('palette-demo', { shape: 'cat', expression: 'loving', colors: OCEAN })
 
-  assert.notEqual(seeded, sunset, 'custom colors change the squishmoji output')
-  assert.equal(sunset, sunsetAgain, 'custom palette squishmoji is deterministic')
+  assert.notEqual(seeded, sunset, 'custom colors change the squish output')
+  assert.equal(sunset, sunsetAgain, 'custom palette squish is deterministic')
   assert.notEqual(sunset, ocean, 'different custom palettes produce different output')
   assert.ok(sunset.includes('#ff5c8a') || sunset.includes('#ff9a3c') || sunset.includes('#c13584') || sunset.includes('#701a75') || sunset.includes('#fde68a'), 'custom color appears in the SVG')
   // Same seed → same body path (geometry untouched by palette override)
@@ -168,13 +168,13 @@ const OCEAN = ['#7dd3fc', '#38bdf8', '#0284c7', '#1e3a8a', '#082f49']
   assert.equal(seededPath, sunsetPath, 'body geometry is palette-independent')
 
   // Custom palette flows through the unified API and JSON layout too
-  const unified = createNovatar({ seed: 'palette-demo', engine: 'squishmoji', shape: 'cat', colors: SUNSET, format: 'json' })
+  const unified = createNovatar({ seed: 'palette-demo', engine: 'squish', shape: 'cat', colors: SUNSET, format: 'json' })
   assert.deepEqual(unified.layout.colors.palette, SUNSET, 'layout metadata carries the custom palette')
 
   assert.throws(
-    () => createSquishmoji('x', { colors: ['#fff', '#000'] }),
+    () => createSquish('x', { colors: ['#fff', '#000'] }),
     /exactly 5 hexadecimal colors/,
-    'squishmoji validates the custom palette like the avatars engine',
+    'squish validates the custom palette like the avatars engine',
   )
 }
 
@@ -287,7 +287,7 @@ const OCEAN = ['#7dd3fc', '#38bdf8', '#0284c7', '#1e3a8a', '#082f49']
 // ---------------------------------------------------------------------------
 
 assert.equal(createNovatar({ seed: 'x', engine: 'avatars' }), createNovatar({ seed: 'x', engine: 'avatar' }), 'engine aliases resolve')
-assert.equal(createNovatar({ seed: 'x', engine: 'squishmoji' }), createNovatar({ seed: 'x', engine: 'squish' }), 'squish aliases resolve')
+assert.equal(createNovatar({ seed: 'x', engine: 'squish' }), createNovatar({ seed: 'x', engine: 'squish' }), 'squish aliases resolve')
 assert.throws(() => resolveEngine('x', 'nope'), /Unknown engine/)
 
 const autoJson = createNovatar({ seed: 'auto-check', engine: 'auto', format: NovatarOutputFormat.json })
@@ -299,18 +299,18 @@ assert.equal(avatarsJson.engine, NovatarEngine.avatars)
 assert.equal(avatarsJson.variant, 'triton')
 assert.equal(avatarsJson.seed, 'unified-1')
 
-const squishNJson = createNovatar({ seed: 'unified-2', engine: 'squishmoji', shape: 'bot', expression: 'happy', format: 'json' })
-assert.equal(squishNJson.engine, NovatarEngine.squishmoji)
+const squishNJson = createNovatar({ seed: 'unified-2', engine: 'squish', shape: 'bot', expression: 'happy', format: 'json' })
+assert.equal(squishNJson.engine, NovatarEngine.squish)
 assert.equal(squishNJson.shape, 'bot')
 assert.equal(squishNJson.expression, 'happy')
 assert.ok(squishNJson.layout)
 
 const catalog = listNovatarStyles()
 assert.equal(catalog.engines.length, 2)
-assert.equal(listNovatarStyles('squishmoji').engines.length, 1)
+assert.equal(listNovatarStyles('squish').engines.length, 1)
 const avatarsEngineCatalog = catalog.engines.find((e) => e.id === 'avatars')
 assert.equal(avatarsEngineCatalog.variants.length, 21)
-const squishEngineCatalog = catalog.engines.find((e) => e.id === 'squishmoji')
+const squishEngineCatalog = catalog.engines.find((e) => e.id === 'squish')
 assert.equal(squishEngineCatalog.shapes.length, 21)
 assert.equal(squishEngineCatalog.expressions.length, 22)
 assert.equal(squishEngineCatalog.backgrounds.length, 6)
@@ -320,7 +320,7 @@ assert.equal(squishEngineCatalog.backgrounds.length, 6)
 // ---------------------------------------------------------------------------
 
 assert.ok(novatarReact.Avatar, 'Avatar is exported in /react')
-assert.ok(novatarReact.Squishmoji, 'Squishmoji is exported in /react')
+assert.ok(novatarReact.Squish, 'Squish is exported in /react')
 assert.ok(novatarReact.Novatar, 'Novatar is exported in /react')
 
 // ---------------------------------------------------------------------------
@@ -342,8 +342,8 @@ const cli = ['dist/cli.js']
   assert.ok(parsed.dataUri.startsWith('data:image/svg+xml'))
 }
 {
-  const { stdout } = await run(node, [...cli, 'justin', '--engine', 'squishmoji', '--shape', 'cat', '--expression', 'loving'])
-  assert.equal(stdout, createSquishmoji('justin', { shape: 'cat', expression: 'loving' }) + '\n', 'CLI flags reach the engine')
+  const { stdout } = await run(node, [...cli, 'justin', '--engine', 'squish', '--shape', 'cat', '--expression', 'loving'])
+  assert.equal(stdout, createSquish('justin', { shape: 'cat', expression: 'loving' }) + '\n', 'CLI flags reach the engine')
 }
 {
   const { stdout } = await run(node, [...cli, '--list'])
@@ -443,7 +443,7 @@ const cli = ['dist/cli.js']
 
 {
   const dir = await import('node:fs/promises').then((m) => m.mkdtemp('/tmp/novatar-fmt-'))
-  const { stdout: animSvg } = await run(node, [...cli, 'justin', '--animate', '--engine', 'squishmoji', '--quiet'])
+  const { stdout: animSvg } = await run(node, [...cli, 'justin', '--animate', '--engine', 'squish', '--quiet'])
   assert.ok(
     animSvg.includes('<animate attributeName="d"') && animSvg.includes('repeatCount="indefinite"'),
     'CLI --animate emits an animatable SMIL svg',
@@ -476,11 +476,11 @@ const cli = ['dist/cli.js']
     { jsonrpc: '2.0', method: 'notifications/initialized' },
     { jsonrpc: '2.0', id: 2, method: 'tools/list' },
     { jsonrpc: '2.0', id: 3, method: 'tools/call', params: { name: 'novatar_list_styles', arguments: {} } },
-    { jsonrpc: '2.0', id: 4, method: 'tools/call', params: { name: 'novatar_generate', arguments: { seed: 'mcp-test', engine: 'squishmoji', shape: 'ufo' } } },
+    { jsonrpc: '2.0', id: 4, method: 'tools/call', params: { name: 'novatar_generate', arguments: { seed: 'mcp-test', engine: 'squish', shape: 'ufo' } } },
     { jsonrpc: '2.0', id: 5, method: 'tools/call', params: { name: 'novatar_generate', arguments: { seed: 'mcp-test', format: 'json' } } },
     { jsonrpc: '2.0', id: 6, method: 'ping' },
     { jsonrpc: '2.0', id: 7, method: 'tools/call', params: { name: 'novatar_generate', arguments: { seed: 'mcp-gif', format: 'gif', size: 64 } } },
-    { jsonrpc: '2.0', id: 8, method: 'tools/call', params: { name: 'novatar_generate', arguments: { seed: 'mcp-anim', animate: true, engine: 'squishmoji' } } },
+    { jsonrpc: '2.0', id: 8, method: 'tools/call', params: { name: 'novatar_generate', arguments: { seed: 'mcp-anim', animate: true, engine: 'squish' } } },
     { jsonrpc: '2.0', id: 9, method: 'tools/call', params: { name: 'novatar_generate', arguments: { seed: 'mcp-anim-2', animate: true, engine: 'avatars', variant: 'triton' } } },
   ]
   const stdout = await new Promise((resolve, reject) => {
@@ -529,7 +529,7 @@ const cli = ['dist/cli.js']
   const pathPngResponse = await handler(new Request('https://example.com/api/avatar/vega.png'))
   assert.equal(pathPngResponse.headers.get('content-type'), 'image/png')
 
-  const jsonResponse = await handler(new Request('https://example.com/api/avatar/vega.json?engine=squishmoji&shape=cat'))
+  const jsonResponse = await handler(new Request('https://example.com/api/avatar/vega.json?engine=squish&shape=cat'))
   assert.equal(jsonResponse.headers.get('content-type'), 'application/json; charset=utf-8')
   const body = JSON.parse(await jsonResponse.text())
   assert.equal(body.seed, 'vega')
@@ -551,7 +551,7 @@ const cli = ['dist/cli.js']
   const gifBytes = new Uint8Array(await gifResponse.arrayBuffer())
   assert.equal(Buffer.from(gifBytes.slice(0, 6)).toString(), 'GIF89a', 'gif route payload')
 
-  const animatedSvgResponse = await handler(new Request('https://example.com/api/avatar/orion.svg?animate=true&engine=squishmoji'))
+  const animatedSvgResponse = await handler(new Request('https://example.com/api/avatar/orion.svg?animate=true&engine=squish'))
   assert.ok((await animatedSvgResponse.text()).includes('<animate attributeName="d"'), 'animated svg route')
 
   const gifEngineGuard = await handler(new Request('https://example.com/api/avatar/vega.gif?engine=avatars'))

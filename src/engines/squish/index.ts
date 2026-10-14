@@ -1,9 +1,9 @@
 /**
- * Squishmoji engine — ported from @usespaceui/squishmoji (MIT, SpaceUI).
+ * Squish engine — adapted from SpaceUI (MIT).
  * 21 body shapes × 22 expressions × 6 generative backgrounds.
  */
 export { resolveLayout, buildLayout } from './engine/layout'
-export { renderLayout, createAvatar as createSquishmoji } from './core/render'
+export { renderLayout, createAvatar as createSquish } from './core/render'
 export { capsulePath } from './core/geometry'
 export {
   resolveShape,

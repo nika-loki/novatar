@@ -10,7 +10,7 @@
 import { createNovatar, listNovatarStyles, resolveEngine, NovatarOutputFormat, type NovatarOptions } from './index'
 
 const SERVER_NAME = 'novatar'
-const SERVER_VERSION = '0.1.0'
+const SERVER_VERSION = '0.2.0'
 const SUPPORTED_PROTOCOL_VERSION = '2025-06-18'
 
 // ---------------------------------------------------------------------------
@@ -60,14 +60,14 @@ const GENERATE_SCHEMA = {
   type: 'object',
   properties: {
     seed: { type: 'string', description: 'Deterministic identity. Same seed → same avatar, forever. Omit for the default "Space UI".' },
-    engine: { type: 'string', enum: ['avatars', 'squishmoji', 'auto'], description: 'avatars = 21 generative variants; squishmoji = expressive characters (21 shapes × 22 expressions × 6 backgrounds); auto = deterministic pick from the seed. Default auto.' },
+    engine: { type: 'string', enum: ['avatars', 'squish', 'auto'], description: 'avatars = 21 generative variants; squish = expressive characters (21 shapes × 22 expressions × 6 backgrounds); auto = deterministic pick from the seed. Default auto.' },
     variant: { type: 'string', description: '[avatars engine] variant id (e.g. "triton", "pebble"), family ("gradient"|"fluid"|"classic"|"paletteless"), or "all".' },
-    shape: { type: 'string', description: '[squishmoji engine] body shape id or "all" (circle, cat, ghost, ufo, bot, star, …).' },
-    expression: { type: 'string', description: '[squishmoji engine] expression id or "all" (happy, loving, angry, sleepy, …).' },
-    background: { type: 'string', description: '[squishmoji engine] background style id or "all" (solid, taygeta, maia, merope, celaeno, alcyone).' },
+    shape: { type: 'string', description: '[squish engine] body shape id or "all" (circle, cat, ghost, ufo, bot, star, …).' },
+    expression: { type: 'string', description: '[squish engine] expression id or "all" (happy, loving, angry, sleepy, …).' },
+    background: { type: 'string', description: '[squish engine] background style id or "all" (solid, taygeta, maia, merope, celaeno, alcyone).' },
     colors: { type: 'array', items: { type: 'string' }, description: 'Exactly 5 hex colors overriding the seeded palette (both engines). The seed keeps driving geometry.' },
     size: { type: 'number', description: 'Rendered size in pixels (default 512 stills, 256 animated).' },
-    format: { type: 'string', enum: ['svg', 'json', 'png', 'webp', 'gif', 'apng'], description: 'svg (default) raw markup; json full metadata + dataUri; png/webp still images; gif/apng ANIMATED (squishmoji engine: blinking + gaze drift, seamless 4.7s loop).' },
+    format: { type: 'string', enum: ['svg', 'json', 'png', 'webp', 'gif', 'apng'], description: 'svg (default) raw markup; json full metadata + dataUri; png/webp still images; gif/apng ANIMATED (squish engine: blinking + gaze drift, seamless 4.7s loop).' },
     animate: { type: 'boolean', description: 'With format svg/json: emit an animated (SMIL) SVG that loops forever inside <img> tags.' },
     fps: { type: 'number', description: 'Animated exports: frames per second 1-60 (default 12).' },
     duration: { type: 'number', description: 'Animated exports: loop seconds; snapped to the 4.7s blink cycle (default 4.7).' },
@@ -81,7 +81,7 @@ const GENERATE_SCHEMA = {
 const LIST_SCHEMA = {
   type: 'object',
   properties: {
-    engine: { type: 'string', enum: ['avatars', 'squishmoji'], description: 'Restrict the catalog to one engine. Omit for both.' },
+    engine: { type: 'string', enum: ['avatars', 'squish'], description: 'Restrict the catalog to one engine. Omit for both.' },
   },
   additionalProperties: false,
 } as const
@@ -141,10 +141,10 @@ async function callGenerate(params: Record<string, unknown>): Promise<ResponseRe
   const animatedRaster = format === 'gif' || format === 'apng'
   const wantsAnimation = animate || animatedRaster
   if (wantsAnimation && !options.engine) {
-    options.engine = 'squishmoji'
+    options.engine = 'squish'
   }
   if (animatedRaster && options.engine && resolveEngine(options.seed || 'Space UI', options.engine) === 'avatars') {
-    return textResult('Animated raster exports (gif/apng) require the squishmoji engine.', true)
+    return textResult('Animated raster exports (gif/apng) require the squish engine.', true)
   }
 
   const writeBinary = async (bytes: Uint8Array, label: string): Promise<ResponseResult> => {
@@ -204,7 +204,7 @@ async function callGenerate(params: Record<string, unknown>): Promise<ResponseRe
       return await writeBinary(await renderAnimatedApng(animationOptions), 'apng')
     }
 
-    if (format === 'json' && animate && resolveEngine(options.seed || 'Space UI', options.engine) === 'squishmoji') {
+    if (format === 'json' && animate && resolveEngine(options.seed || 'Space UI', options.engine) === 'squish') {
       const { renderAnimatedSvg, resolveShape, resolveExpression, resolveBackgroundStyle } = await import('./index')
       const svg = renderAnimatedSvg({
         seed: options.seed || 'Space UI',
@@ -219,7 +219,7 @@ async function callGenerate(params: Record<string, unknown>): Promise<ResponseRe
       const seed = options.seed || 'Space UI'
       const payload = JSON.stringify({
         seed,
-        engine: 'squishmoji',
+        engine: 'squish',
         animated: true,
         fps: fps ?? 12,
         ...(duration ? { duration } : {}),
@@ -249,7 +249,7 @@ async function callGenerate(params: Record<string, unknown>): Promise<ResponseRe
 
     // svg (optionally animated)
     let svg: string
-    if (animate && resolveEngine(options.seed || 'Space UI', options.engine) === 'squishmoji') {
+    if (animate && resolveEngine(options.seed || 'Space UI', options.engine) === 'squish') {
       const { renderAnimatedSvg } = await import('./animation')
       svg = renderAnimatedSvg({
         seed: options.seed || 'Space UI',
@@ -310,7 +310,7 @@ function listTools(): ResponseResult {
       {
         name: 'novatar_list_styles',
         description:
-          'List every available style: avatars engine variants by family, and squishmoji shapes, expressions, and backgrounds.',
+          'List every available style: avatars engine variants by family, and squish shapes, expressions, and backgrounds.',
         inputSchema: LIST_SCHEMA,
       },
       {

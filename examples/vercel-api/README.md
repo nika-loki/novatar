@@ -28,7 +28,7 @@ npx vercel --yes --prod
 | `/api/avatar/:seed.json`      | JSON   | Metadata + ready-to-use `dataUri`      |
 | `/api/avatar/styles`          | JSON   | Full style catalog                     |
 
-Query parameters: `engine` (avatars \| squishmoji \| auto), `variant`, `shape`,
+Query parameters: `engine` (avatars \| squish \| auto), `variant`, `shape`,
 `expression`, `background`, `size`, `circle`, `effect`, `animate`, `colors`
 (5 comma-separated hex values), `format` (overrides the path extension).
 
@@ -48,7 +48,7 @@ npx vercel dev
 Deployed URLs can be used directly as external image URLs:
 
 ```
-https://<your-app>.vercel.app/api/avatar/justin.png?engine=squishmoji&shape=cat&expression=loving
+https://<your-app>.vercel.app/api/avatar/justin.png?engine=squish&shape=cat&expression=loving
 ```
 
 Notion image blocks accept external URLs, so an agent can attach avatars to

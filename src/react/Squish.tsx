@@ -5,9 +5,9 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { SquishEngine } from "../engines/squishmoji/engine/animation";
-import { renderLayout } from "../engines/squishmoji/core/render";
-import { resolveExpression, resolveShape } from "../engines/squishmoji/core/resolve";
+import { SquishEngine } from "../engines/squish/engine/animation";
+import { renderLayout } from "../engines/squish/core/render";
+import { resolveExpression, resolveShape } from "../engines/squish/core/resolve";
 import {
   DEFAULT_BACKGROUND_STYLE,
   DEFAULT_EXPRESSION,
@@ -19,12 +19,12 @@ import {
   type SquishExpressionChoice,
   type SquishLayout,
   type SquishShapeChoice,
-} from "../engines/squishmoji/types";
+} from "../engines/squish/types";
 
 /**
- * Properties for configuring the React Squishmoji component.
+ * Properties for configuring the React Squish component.
  */
-export interface SquishmojiProps {
+export interface SquishProps {
   /** Width and height of the SVG. Defaults to `120`. */
   size?: number | string;
   /** Deterministic seed string generating the avatar's core geometry and palette. Defaults to `DEFAULT_SEED` ("Space UI"). */
@@ -83,7 +83,7 @@ const now = () => performance.now() / 1000;
 
 type Eye = SquishLayout["eyes"][number];
 
-function SquishmojiComponent({
+function SquishComponent({
   size = DEFAULT_VALUE.size,
   seed = DEFAULT_VALUE.seed,
   shape = DEFAULT_VALUE.shape,
@@ -101,7 +101,7 @@ function SquishmojiComponent({
   blinkTrigger = DEFAULT_VALUE.blinkTrigger,
   className,
   style,
-}: SquishmojiProps) {
+}: SquishProps) {
   const isLive = frozenAt === undefined;
   const resolvedShape = resolveShape(seed, shape);
   const resolvedStartExpression = resolveExpression(seed, expression);
@@ -272,4 +272,4 @@ function SquishmojiComponent({
   );
 }
 
-export const Squishmoji = memo(SquishmojiComponent);
+export const Squish = memo(SquishComponent);

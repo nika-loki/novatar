@@ -10,7 +10,7 @@ const HEX_COLOR = /^#(?:[\da-f]{3}|[\da-f]{4}|[\da-f]{6}|[\da-f]{8})$/i;
 /**
  * Resolves the palette for a seed. When `override` is provided it must be
  * exactly 5 hexadecimal colors and is used verbatim (novatar extension —
- * upstream squishmoji is seeded-only). Overrides bypass the cache.
+ * upstream squish is seeded-only). Overrides bypass the cache.
  */
 export function paletteFor(seed: string, override?: readonly string[]) {
   if (override !== undefined) {

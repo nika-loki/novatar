@@ -1,7 +1,7 @@
 /**
  * Animated avatar exports — animated SVG (SMIL), APNG, and GIF.
  *
- * The React <Squishmoji /> component animates via requestAnimationFrame;
+ * The React <Squish /> component animates via requestAnimationFrame;
  * these exporters reproduce its exact steady-state motion (autonomous
  * blinking + gaze drift, optional wobble) as pure functions of time, so
  * every format shows identical movement:
@@ -16,15 +16,15 @@
  * SMIL keyframe list) wrap seamlessly. Durations are snapped to a multiple
  * of the blink cycle for the same reason.
  */
-import { renderLayout } from './engines/squishmoji/core/render'
-import { backgroundMarkup } from './engines/squishmoji/engine/backgrounds'
-import { stableId, escapeXml, format } from './engines/squishmoji/core/svg'
-import { resolveBackgroundStyle } from './engines/squishmoji/core/resolve'
-import { resolveLayout } from './engines/squishmoji/engine/layout'
-import { BACKGROUND_STYLES, type SquishOptions, type SquishLayout } from './engines/squishmoji/types'
+import { renderLayout } from './engines/squish/core/render'
+import { backgroundMarkup } from './engines/squish/engine/backgrounds'
+import { stableId, escapeXml, format } from './engines/squish/core/svg'
+import { resolveBackgroundStyle } from './engines/squish/core/resolve'
+import { resolveLayout } from './engines/squish/engine/layout'
+import { BACKGROUND_STYLES, type SquishOptions, type SquishLayout } from './engines/squish/types'
 import { renderPixmap } from './raster'
 
-// Motion constants mirrored from the React component (Squishmoji.tsx).
+// Motion constants mirrored from the React component (Squish.tsx).
 const BLINK_PERIOD = 4.7
 const BLINK_PHASE_OFFSET = 1.35
 const BLINK_OPEN_WINDOW = 0.18
@@ -40,7 +40,7 @@ const WOBBLE_ROTATION = 0.45
 export interface AnimatedAvatarOptions {
   /** Deterministic identity. Same seed → same avatar and same motion. */
   seed: string
-  /** Body shape id or "all". Defaults like createSquishmoji. */
+  /** Body shape id or "all". Defaults like createSquish. */
   shape?: string
   /** Expression id or "all". */
   expression?: string

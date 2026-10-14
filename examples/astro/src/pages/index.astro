@@ -5,7 +5,7 @@
 import { createNovatar, renderAnimatedSvg } from 'novatar'
 
 const seed = Astro.url.searchParams.get('seed') ?? 'justin'
-const squish = createNovatar({ seed, engine: 'squishmoji', shape: 'cat', expression: 'loving' })
+const squish = createNovatar({ seed, engine: 'squish', shape: 'cat', expression: 'loving' })
 const abstract = createNovatar({ seed: 'orion', engine: 'avatars', variant: 'triton' })
 // SMIL animation (blinking + gaze drift) — works without client-side JS.
 const animated = renderAnimatedSvg({ seed: 'hero', shape: 'ufo' })
@@ -18,6 +18,6 @@ const animated = renderAnimatedSvg({ seed: 'hero', shape: 'ufo' })
     <Fragment set:html={abstract} />
     <Fragment set:html={animated} />
     <!-- or straight from the API endpoint -->
-    <img src="/api/avatar/justin.png?engine=squishmoji&shape=cat&size=128" width="128" alt="avatar" />
+    <img src="/api/avatar/justin.png?engine=squish&shape=cat&size=128" width="128" alt="avatar" />
   </body>
 </html>

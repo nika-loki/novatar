@@ -3,16 +3,16 @@
  *
  * One package, two engines, one identity model:
  *   engine "avatars"    → 21 generative variants (gradient / fluid / classic / paletteless)
- *                         ported from @usespaceui/avatars (MIT, SpaceUI)
- *   engine "squishmoji" → 21 shapes × 22 expressions × 6 backgrounds
- *                         ported from @usespaceui/squishmoji (MIT, SpaceUI)
+ *                         adapted from SpaceUI (MIT)
+ *   engine "squish" → 21 shapes × 22 expressions × 6 backgrounds
+ *                         adapted from SpaceUI (MIT)
  *
  * The same seed always produces the same avatar on every machine, runtime,
  * and version of this package (within a major version).
  */
 
 // ---------------------------------------------------------------------------
-// Vendored palette engine (bit-exact with @usespaceui/gradients)
+// Vendored palette engine (bit-exact with the adapted palette engine)
 // ---------------------------------------------------------------------------
 export { generatePalette, PaletteMode } from './palette'
 export type { GeneratePaletteOptions, GeneratedPalette } from './palette'
@@ -31,19 +31,19 @@ export {
 export type { AnimatedAvatarOptions, RasterAnimationOptions, AnimationFrame } from './animation'
 
 // ---------------------------------------------------------------------------
-// Engine: avatars (compat surface of @usespaceui/avatars)
+// Engine: avatars (drop-in compat surface)
 // ---------------------------------------------------------------------------
 export * from './engines/avatars'
 
 // ---------------------------------------------------------------------------
-// Engine: squishmoji (compat surface of @usespaceui/squishmoji)
+// Engine: squish (character-engine API)
 // ---------------------------------------------------------------------------
-export * from './engines/squishmoji'
+export * from './engines/squish'
 
 import { createAvatar } from './engines/avatars'
-import { createSquishmoji } from './engines/squishmoji'
-import { SHAPE_VALUES, EXPRESSION_VALUES, BACKGROUND_STYLE_VALUES } from './engines/squishmoji'
-import type { SquishOptions, SquishJson } from './engines/squishmoji'
+import { createSquish } from './engines/squish'
+import { SHAPE_VALUES, EXPRESSION_VALUES, BACKGROUND_STYLE_VALUES } from './engines/squish'
+import type { SquishOptions, SquishJson } from './engines/squish'
 import {
   AvatarFamily,
   getFamilyVariants,
@@ -56,7 +56,7 @@ import type { AvatarJson, CreateAvatarOptions } from './engines/avatars'
 
 export const NovatarEngine = {
   avatars: 'avatars',
-  squishmoji: 'squishmoji',
+  squish: 'squish',
 } as const
 export type NovatarEngineId = (typeof NovatarEngine)[keyof typeof NovatarEngine]
 export type NovatarEngineChoice = NovatarEngineId | 'auto'
@@ -71,15 +71,14 @@ const ENGINE_ALIASES: Record<string, NovatarEngineId> = {
   avatars: NovatarEngine.avatars,
   avatar: NovatarEngine.avatars,
   art: NovatarEngine.avatars,
-  squishmoji: NovatarEngine.squishmoji,
-  squish: NovatarEngine.squishmoji,
-  emoji: NovatarEngine.squishmoji,
-  character: NovatarEngine.squishmoji,
+  squish: NovatarEngine.squish,
+  emoji: NovatarEngine.squish,
+  character: NovatarEngine.squish,
 }
 
-const ENGINES: readonly NovatarEngineId[] = [NovatarEngine.avatars, NovatarEngine.squishmoji]
+const ENGINES: readonly NovatarEngineId[] = [NovatarEngine.avatars, NovatarEngine.squish]
 
-/** Stable default identity, shared with both upstream engines. */
+/** Stable default identity seed. */
 export const DEFAULT_SEED = 'Space UI'
 
 function fnv1a(input: string): number {
@@ -100,7 +99,7 @@ export interface NovatarOptions {
   /** Deterministic identity. Same seed → same avatar, forever. Defaults to "Space UI". */
   seed?: string
   /**
-   * Which engine renders the avatar: "avatars" (21 variants), "squishmoji"
+   * Which engine renders the avatar: "avatars" (21 variants), "squish"
    * (shapes × expressions), or "auto" to pick deterministically from the seed.
    * Aliases: "squish", "emoji", "avatar", "art".
    */
@@ -110,7 +109,7 @@ export interface NovatarOptions {
   /** Rendered size in pixels. Omitted → each engine's native default. */
 
   // --- engine "avatars" options -------------------------------------------
-  /** Variant id ("triton"), family ("fluid"), or "all". Ignored by squishmoji. */
+  /** Variant id ("triton"), family ("fluid"), or "all". Ignored by squish. */
   variant?: string
   /** Clip to a full circle (avatars engine only). */
   circle?: boolean
@@ -121,12 +120,12 @@ export interface NovatarOptions {
   /** Enable animation where the variant supports it (avatars engine only). */
   animate?: boolean
 
-  // --- engine "squishmoji" options ----------------------------------------
-  /** Body shape id or "all" (squishmoji engine only). */
+  // --- engine "squish" options ----------------------------------------
+  /** Body shape id or "all" (squish engine only). */
   shape?: string
-  /** Expression id or "all" (squishmoji engine only). */
+  /** Expression id or "all" (squish engine only). */
   expression?: string
-  /** Background style id or "all" (squishmoji engine only). */
+  /** Background style id or "all" (squish engine only). */
   backgroundStyle?: string
   size?: number
 }
@@ -143,7 +142,7 @@ export interface NovatarJson {
   circle?: boolean
   effect?: string
   animate?: boolean
-  // Present when engine === "squishmoji":
+  // Present when engine === "squish":
   shape?: string
   expression?: string
   backgroundStyle?: string
@@ -158,7 +157,7 @@ export function resolveEngine(seed: string, engine?: NovatarEngineChoice | strin
   }
   const id = ENGINE_ALIASES[String(engine).trim().toLowerCase()]
   if (!id) {
-    throw new RangeError(`Unknown engine: ${String(engine)}. Use "avatars", "squishmoji", or "auto".`)
+    throw new RangeError(`Unknown engine: ${String(engine)}. Use "avatars", "squish", or "auto".`)
   }
   return id
 }
@@ -174,7 +173,7 @@ export function createNovatar(options: NovatarOptions = {}): string | NovatarJso
   const seed = (options.seed && options.seed.trim()) || DEFAULT_SEED
   const engine = resolveEngine(seed, options.engine)
 
-  if (engine === NovatarEngine.squishmoji) {
+  if (engine === NovatarEngine.squish) {
     const squishOptions: Omit<SquishOptions, 'format'> = {
       seed,
       size: options.size,
@@ -184,7 +183,7 @@ export function createNovatar(options: NovatarOptions = {}): string | NovatarJso
       colors: options.colors,
     }
     if (format === NovatarOutputFormat.json) {
-      const json = createSquishmoji({ ...squishOptions, format: 'json' })
+      const json = createSquish({ ...squishOptions, format: 'json' })
       return {
         seed: json.seed,
         engine,
@@ -196,7 +195,7 @@ export function createNovatar(options: NovatarOptions = {}): string | NovatarJso
         layout: json.layout,
       }
     }
-    return createSquishmoji(squishOptions)
+    return createSquish(squishOptions)
   }
 
   const avatarOptions: Omit<CreateAvatarOptions, 'format'> = {
@@ -234,7 +233,7 @@ export interface NovatarEngineCatalog {
   /** avatars engine: variants grouped by visual family. */
   families?: Record<string, string[]>
   variants?: string[]
-  /** squishmoji engine catalogs. */
+  /** squish engine catalogs. */
   shapes?: string[]
   expressions?: string[]
   backgrounds?: string[]
@@ -266,7 +265,7 @@ export function listNovatarStyles(engine?: NovatarEngineChoice | string): Novata
   }
 
   const squishCatalog: NovatarEngineCatalog = {
-    id: NovatarEngine.squishmoji,
+    id: NovatarEngine.squish,
     description: 'Squishy expressive characters (21 shapes × 22 expressions × 6 backgrounds).',
     shapes: [...SHAPE_VALUES],
     expressions: [...EXPRESSION_VALUES],
@@ -274,6 +273,6 @@ export function listNovatarStyles(engine?: NovatarEngineChoice | string): Novata
   }
 
   if (wanted === NovatarEngine.avatars) return { engines: [avatarsCatalog] }
-  if (wanted === NovatarEngine.squishmoji) return { engines: [squishCatalog] }
+  if (wanted === NovatarEngine.squish) return { engines: [squishCatalog] }
   return { engines: [avatarsCatalog, squishCatalog] }
 }

@@ -1,5 +1,5 @@
 /**
- * Avatars engine — ported from @usespaceui/avatars (MIT, SpaceUI).
+ * Avatars engine — adapted from SpaceUI (MIT).
  * 21 generative variants across 4 families: gradient, fluid, classic, paletteless.
  */
 export {
