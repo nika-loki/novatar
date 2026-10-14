@@ -21,6 +21,7 @@ The same seed always produces the same avatar: byte-identical output across mach
 <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/agents/grok-white.svg" /><img src="assets/agents/grok.svg" width="26" alt="Grok logo" /></picture><br /><sub><b>Grok</b></sub></td>
 <td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/agents/openai-white.svg" /><img src="assets/agents/openai.svg" width="26" alt="OpenAI logo" /></picture><br /><sub><b>OpenAI</b></sub></td>
 <td align="center"><img src="assets/agents/gemini.svg" width="26" alt="Gemini logo" /><br /><sub><b>Gemini</b></sub></td>
+<td align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/agents/notion-white.svg" /><img src="assets/agents/notion.svg" width="26" alt="Notion logo" /></picture><br /><sub><b>Notion</b></sub></td>
 </tr></table>
 
 Two engines, one identity model:
