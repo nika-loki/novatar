@@ -75,7 +75,7 @@ const details = getAllAvatarDetails()
 assert.equal(details.length, 21, '21 avatar variants are catalogued')
 
 // ---------------------------------------------------------------------------
-// 2. Duo engine contracts (ported from @usespaceui/duo)
+// 2. Duo engine contracts (adapted character engine)
 // ---------------------------------------------------------------------------
 
 const defaultDuo = createDuo()
