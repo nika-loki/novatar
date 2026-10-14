@@ -1,0 +1,133 @@
+{
+  "name": "novatar",
+  "version": "0.1.0",
+  "description": "Deterministic generative SVG avatar engine for humans and AI agents. CLI + MCP + React + HTTP, zero-config npx.",
+  "author": {
+    "name": "Justin Cheu",
+    "email": "justin@notionduo.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/nika-loki/novatar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nika-loki/novatar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nika-loki/novatar/issues",
+    "email": "justin@notionduo.com"
+  },
+  "keywords": [
+    "avatar",
+    "avatars",
+    "squishmoji",
+    "emoji",
+    "svg",
+    "procedural",
+    "generative",
+    "deterministic",
+    "cli",
+    "mcp",
+    "ai-agents",
+    "react",
+    "notion",
+    "vercel"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "novatar": "./dist/cli.js",
+    "novatar-mcp": "./dist/mcp.js"
+  },
+  "files": [
+    "dist",
+    "assets",
+    "README.md",
+    "AGENTS.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./react": {
+      "import": {
+        "types": "./dist/react.d.ts",
+        "default": "./dist/react.js"
+      },
+      "require": {
+        "types": "./dist/react.d.cts",
+        "default": "./dist/react.cjs"
+      }
+    },
+    "./server": {
+      "import": {
+        "types": "./dist/server.d.ts",
+        "default": "./dist/server.js"
+      },
+      "require": {
+        "types": "./dist/server.d.cts",
+        "default": "./dist/server.cjs"
+      }
+    },
+    "./raster": {
+      "import": {
+        "types": "./dist/raster.d.ts",
+        "default": "./dist/raster.js"
+      },
+      "require": {
+        "types": "./dist/raster.d.cts",
+        "default": "./dist/raster.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node test/contracts.mjs",
+    "prepublishOnly": "npm run test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@resvg/resvg-wasm": "^2.6.2",
+    "gifenc": "^1.0.3",
+    "upng-js": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.2.18",
+    "@usespaceui/avatars": "^0.1.4",
+    "@usespaceui/squishmoji": "^0.1.0",
+    "playwright-core": "^1.64.0",
+    "react": "^19.2.8",
+    "tsup": "^8.0.2",
+    "typescript": "^5.7.3"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.35.5"
+  }
+}

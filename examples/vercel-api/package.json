@@ -1,0 +1,13 @@
+{
+  "name": "novatar-vercel-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel deploy"
+  },
+  "dependencies": {
+    "novatar": "file:../.."
+  }
+}

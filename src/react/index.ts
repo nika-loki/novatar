@@ -1,0 +1,6 @@
+export { Avatar } from './Avatar'
+export type { AvatarProps } from './Avatar'
+export { Squishmoji, Squishmoji as SquishmojiAvatar } from './Squishmoji'
+export type { SquishmojiProps } from './Squishmoji'
+export { Novatar } from './Novatar'
+export type { NovatarProps } from './Novatar'
