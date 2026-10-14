@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 200 200" role="img" aria-label="Avatar for orion">
+    <rect width="200" height="200" fill="#f8faf5" />
+    
+    <g stroke="#000000" stroke-width="5" stroke-linejoin="round">
+      <circle cx="100" cy="30" r="19" fill="#16273d" />
+      <path d="M50 96 Q48 40 100 34 Q152 40 150 96 Q126 56 100 56 Q74 56 50 96 Z" fill="#16273d" />
+    </g>
+  
+    <path d="M50 104 Q40 104 41 114 Q42 124 52 122" fill="transparent" stroke="#000000" stroke-width="5" stroke-linecap="round" />
+    <path d="M150 104 Q160 104 159 114 Q158 124 148 122" fill="transparent" stroke="#000000" stroke-width="5" stroke-linecap="round" />
+    <path d="M50 100 A50 60 0 0 0 150 100 A50 60 0 0 0 50 100 Z" fill="transparent" stroke="#000000" stroke-width="6" stroke-linejoin="round" />
+    <path d="M52 88 Q56 44 100 42 Q144 44 148 88 Q136 60 102 74 Q68 60 52 88 Z" fill="#16273d" stroke="#000000" stroke-width="5" stroke-linejoin="round" />
+    <g fill="none" stroke="#000000" stroke-width="5" stroke-linecap="round"><line x1="69" y1="85" x2="87" y2="88" /><line x1="113" y1="88" x2="131" y2="85" /></g>
+    <g fill="none" stroke="#000000" stroke-width="6" stroke-linecap="round"><line x1="69" y1="100" x2="87" y2="100" /><line x1="113" y1="100" x2="131" y2="100" /></g>
+    <circle cx="100" cy="117" r="3.5" fill="#000000" />
+    <path d="M80 128 Q100 152 120 128" fill="none" stroke="#000000" stroke-width="6" stroke-linecap="round" />
+    
+  </svg>

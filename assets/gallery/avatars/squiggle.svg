@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 200 200" role="img" aria-label="Avatar for orion">
+    <rect width="200" height="200" fill="#f8faf5" />
+    <g transform="translate(100 108) scale(0.82) translate(-100 -104)">
+      <path d="M100 48 C136 48 162 74 162 110 C162 145 135 170 100 170 C65 170 38 145 38 110 C38 74 64 48 100 48 Z" fill="#96a4e2" />
+      <g fill="none" stroke="#000000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M70 102 L80 112 L90 102" /><path d="M112 102 L122 112 L132 102" /></g>
+      <path d="M96 100 V118 H108" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="1" />
+      <g fill="none" stroke="#000000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M74 126 C88 148 116 148 126 126" /><path d="M108 142 C112 154 126 152 124 138" /></g>
+      <g fill="none" stroke="#000000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M38 90 H162" /><path d="M62 88 C64 60 78 46 92 54 C100 58 100 66 100 70 C100 62 106 50 118 52 C132 54 138 68 138 88" /></g>
+    </g>
+  </svg>

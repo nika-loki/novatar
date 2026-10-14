@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 200 200" role="img" aria-label="Avatar for orion">
+    <defs>
+      <clipPath id="critter-head-2250878267">
+        <rect width="200" height="200" />
+      </clipPath>
+    </defs>
+    <rect width="200" height="200" fill="#f8faf5" />
+    <g clip-path="url(#critter-head-2250878267)">
+      
+    <g fill="#111114">
+      <ellipse cx="42" cy="104" rx="20" ry="30" />
+      <ellipse cx="158" cy="104" rx="20" ry="30" />
+    </g>
+  
+      <ellipse cx="74" cy="110" rx="24" ry="26" fill="#111114" />
+      <g><circle cx="76" cy="112" r="8" fill="#f8faf5" /><circle cx="124" cy="112" r="8" fill="#111114" /></g>
+      
+    <g fill="#111114">
+      <rect x="84" y="128" width="32" height="12" rx="6" />
+      <rect x="86" y="152" width="28" height="6" rx="3" />
+    </g>
+  
+    </g>
+  </svg>

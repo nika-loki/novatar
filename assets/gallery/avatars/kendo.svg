@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 200 200" role="img" aria-label="Avatar for orion">
+    <defs>
+      <clipPath id="kendo-clip-3715548914">
+        <rect width="200" height="200" />
+      </clipPath>
+    </defs>
+    <rect width="200" height="200" fill="#f4f1e9" />
+    <circle cx="100" cy="96" r="76" fill="#d8332c" opacity="0.14" />
+    <g clip-path="url(#kendo-clip-3715548914)">
+      <path d="M100 44 C138 44 156 68 156 104 C156 140 136 168 100 168 C64 168 44 140 44 104 C44 68 62 44 100 44 Z" fill="#f4f1e9" />
+      
+    <g fill="#0e0e11">
+      <path d="M68 120 q12 -9 24 0 q-12 5 -24 0 Z" />
+      <path d="M108 120 q12 -9 24 0 q-12 5 -24 0 Z" />
+    </g>
+  <path d="M100 126 v10" stroke="#0e0e11" stroke-width="4" stroke-linecap="round" /><path d="M86 146 q14 14 28 0" stroke="#0e0e11" stroke-width="5" fill="none" stroke-linecap="round" />
+      
+    <g>
+      <path d="M44 94 C44 58 66 38 100 38 C134 38 156 58 156 94 Z" fill="#0e0e11" />
+      <rect x="88" y="14" width="24" height="26" rx="10" fill="#0e0e11" />
+      <rect x="86" y="30" width="28" height="7" rx="3.5" fill="#d8332c" />
+    </g>
+  
+    </g>
+  </svg>

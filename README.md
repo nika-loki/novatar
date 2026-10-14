@@ -164,22 +164,132 @@ Deterministic responses ship with `Cache-Control: immutable`. See
 
 ## Style catalog
 
-### `avatars` engine — variants
+<!-- novatar:gallery:start -->
+### avatars engine — 21 variants
 
-| Family        | Variants                                                             |
-| ------------- | -------------------------------------------------------------------- |
-| `gradient`    | `lumina` `shaula` `singularity` `triton` `solar-flare` `titan` `glass` |
-| `fluid`       | `splash` `animals` `astronaut` `ghost` `bot` `glitch`                  |
-| `classic`     | `pebble` `invader` `grunge` `bored` `doodle` `squiggle`                |
-| `paletteless` | `critter` `kendo`                                                       |
+All tiles use the same seed (`orion`), so palette differences come from the variants themselves.
 
-`--variant` also accepts a family name or `all` (deterministic pick from the seed).
+<h4>gradient</h4>
 
-### `squishmoji` engine
+<table><tr>
+<td align="center"><img src="assets/gallery/avatars/lumina.svg" width="72" alt="lumina avatar" /><br /><sub><code>lumina</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/shaula.svg" width="72" alt="shaula avatar" /><br /><sub><code>shaula</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/singularity.svg" width="72" alt="singularity avatar" /><br /><sub><code>singularity</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/triton.svg" width="72" alt="triton avatar" /><br /><sub><code>triton</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/solar-flare.svg" width="72" alt="solar-flare avatar" /><br /><sub><code>solar-flare</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/titan.svg" width="72" alt="titan avatar" /><br /><sub><code>titan</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/glass.svg" width="72" alt="glass avatar" /><br /><sub><code>glass</code></sub></td>
+</tr></table>
 
-- **Shapes (21):** `circle` `pebble` `squircle` `capsule` `triangle` `hexagon` `cloud` `drop` `square` `pentagon` `octagon` `star` `flower` `cat` `ghost` `ufo` `bot` `alien` `lion` `monkey` `mecha`
-- **Expressions (22):** `neutral` `happy` `sad` `excited` `angry` `loving` `surprised` `laughing` `scared` `suspicious` `confused` `curious` `proud` `shy` `bored` `sleepy` `crazy` `determined` `guilty` `amazed` `doubtful` `attentive`
-- **Backgrounds (6):** `solid` `taygeta` `celaeno` `alcyone` `maia` `merope`
+<h4>fluid</h4>
+
+<table><tr>
+<td align="center"><img src="assets/gallery/avatars/splash.svg" width="72" alt="splash avatar" /><br /><sub><code>splash</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/animals.svg" width="72" alt="animals avatar" /><br /><sub><code>animals</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/astronaut.svg" width="72" alt="astronaut avatar" /><br /><sub><code>astronaut</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/ghost.svg" width="72" alt="ghost avatar" /><br /><sub><code>ghost</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/bot.svg" width="72" alt="bot avatar" /><br /><sub><code>bot</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/glitch.svg" width="72" alt="glitch avatar" /><br /><sub><code>glitch</code></sub></td>
+</tr></table>
+
+<h4>classic</h4>
+
+<table><tr>
+<td align="center"><img src="assets/gallery/avatars/pebble.svg" width="72" alt="pebble avatar" /><br /><sub><code>pebble</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/invader.svg" width="72" alt="invader avatar" /><br /><sub><code>invader</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/grunge.svg" width="72" alt="grunge avatar" /><br /><sub><code>grunge</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/bored.svg" width="72" alt="bored avatar" /><br /><sub><code>bored</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/doodle.svg" width="72" alt="doodle avatar" /><br /><sub><code>doodle</code></sub></td>
+<td align="center"><img src="assets/gallery/avatars/squiggle.svg" width="72" alt="squiggle avatar" /><br /><sub><code>squiggle</code></sub></td>
+</tr></table>
+
+<h4>paletteless</h4>
+
+<table><tr>
+<td align="center"><img src="assets/gallery/avatars/critter.svg" width="72" alt="critter avatar" /><br /><sub><code>critter</code> <i>(ink-only)</i></sub></td>
+<td align="center"><img src="assets/gallery/avatars/kendo.svg" width="72" alt="kendo avatar" /><br /><sub><code>kendo</code> <i>(ink-only)</i></sub></td>
+</tr></table>
+
+### squishmoji engine — 21 shapes
+
+Seed `novatar`, rotating expressions to show a little life:
+
+<table><tr>
+<td align="center"><img src="assets/gallery/squish/shape-circle.svg" width="72" alt="circle shape" /><br /><sub><code>circle</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-pebble.svg" width="72" alt="pebble shape" /><br /><sub><code>pebble</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-squircle.svg" width="72" alt="squircle shape" /><br /><sub><code>squircle</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-capsule.svg" width="72" alt="capsule shape" /><br /><sub><code>capsule</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-triangle.svg" width="72" alt="triangle shape" /><br /><sub><code>triangle</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-hexagon.svg" width="72" alt="hexagon shape" /><br /><sub><code>hexagon</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-cloud.svg" width="72" alt="cloud shape" /><br /><sub><code>cloud</code></sub></td>
+</tr></table>
+
+<table><tr>
+<td align="center"><img src="assets/gallery/squish/shape-drop.svg" width="72" alt="drop shape" /><br /><sub><code>drop</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-square.svg" width="72" alt="square shape" /><br /><sub><code>square</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-pentagon.svg" width="72" alt="pentagon shape" /><br /><sub><code>pentagon</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-octagon.svg" width="72" alt="octagon shape" /><br /><sub><code>octagon</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-star.svg" width="72" alt="star shape" /><br /><sub><code>star</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-cat.svg" width="72" alt="cat shape" /><br /><sub><code>cat</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-ghost.svg" width="72" alt="ghost shape" /><br /><sub><code>ghost</code></sub></td>
+</tr></table>
+
+<table><tr>
+<td align="center"><img src="assets/gallery/squish/shape-ufo.svg" width="72" alt="ufo shape" /><br /><sub><code>ufo</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-flower.svg" width="72" alt="flower shape" /><br /><sub><code>flower</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-bot.svg" width="72" alt="bot shape" /><br /><sub><code>bot</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-alien.svg" width="72" alt="alien shape" /><br /><sub><code>alien</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-lion.svg" width="72" alt="lion shape" /><br /><sub><code>lion</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-monkey.svg" width="72" alt="monkey shape" /><br /><sub><code>monkey</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/shape-mecha.svg" width="72" alt="mecha shape" /><br /><sub><code>mecha</code></sub></td>
+</tr></table>
+
+### 22 expressions
+
+Same seed and shape — only the expression changes:
+
+<table><tr>
+<td align="center"><img src="assets/gallery/squish/expression-neutral.svg" width="60" alt="neutral expression" /><br /><sub><code>neutral</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-attentive.svg" width="60" alt="attentive expression" /><br /><sub><code>attentive</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-surprised.svg" width="60" alt="surprised expression" /><br /><sub><code>surprised</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-excited.svg" width="60" alt="excited expression" /><br /><sub><code>excited</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-happy.svg" width="60" alt="happy expression" /><br /><sub><code>happy</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-laughing.svg" width="60" alt="laughing expression" /><br /><sub><code>laughing</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-angry.svg" width="60" alt="angry expression" /><br /><sub><code>angry</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-sad.svg" width="60" alt="sad expression" /><br /><sub><code>sad</code></sub></td>
+</tr></table>
+
+<table><tr>
+<td align="center"><img src="assets/gallery/squish/expression-scared.svg" width="60" alt="scared expression" /><br /><sub><code>scared</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-suspicious.svg" width="60" alt="suspicious expression" /><br /><sub><code>suspicious</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-confused.svg" width="60" alt="confused expression" /><br /><sub><code>confused</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-curious.svg" width="60" alt="curious expression" /><br /><sub><code>curious</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-proud.svg" width="60" alt="proud expression" /><br /><sub><code>proud</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-shy.svg" width="60" alt="shy expression" /><br /><sub><code>shy</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-bored.svg" width="60" alt="bored expression" /><br /><sub><code>bored</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-sleepy.svg" width="60" alt="sleepy expression" /><br /><sub><code>sleepy</code></sub></td>
+</tr></table>
+
+<table><tr>
+<td align="center"><img src="assets/gallery/squish/expression-crazy.svg" width="60" alt="crazy expression" /><br /><sub><code>crazy</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-loving.svg" width="60" alt="loving expression" /><br /><sub><code>loving</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-determined.svg" width="60" alt="determined expression" /><br /><sub><code>determined</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-guilty.svg" width="60" alt="guilty expression" /><br /><sub><code>guilty</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-amazed.svg" width="60" alt="amazed expression" /><br /><sub><code>amazed</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/expression-doubtful.svg" width="60" alt="doubtful expression" /><br /><sub><code>doubtful</code></sub></td>
+</tr></table>
+
+### 6 generative backgrounds
+
+<table><tr>
+<td align="center"><img src="assets/gallery/squish/background-solid.svg" width="72" alt="solid background" /><br /><sub><code>solid</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/background-taygeta.svg" width="72" alt="taygeta background" /><br /><sub><code>taygeta</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/background-maia.svg" width="72" alt="maia background" /><br /><sub><code>maia</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/background-merope.svg" width="72" alt="merope background" /><br /><sub><code>merope</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/background-celaeno.svg" width="72" alt="celaeno background" /><br /><sub><code>celaeno</code></sub></td>
+<td align="center"><img src="assets/gallery/squish/background-alcyone.svg" width="72" alt="alcyone background" /><br /><sub><code>alcyone</code></sub></td>
+</tr></table>
+<!-- novatar:gallery:end -->
 
 Every catalog accepts `all` for a deterministic pick from the seed. Query the live
 catalog anywhere: `npx novatar --list` or `listNovatarStyles()`.

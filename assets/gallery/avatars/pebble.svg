@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 200 200" role="img" aria-label="Avatar for orion">
+    <defs>
+      <filter id="sf-avatar-2250878267" x="-25%" y="-25%" width="150%" height="150%">
+        <feGaussianBlur stdDeviation="26" />
+      </filter>
+      <filter id="gr-avatar-2250878267">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" />
+        <feColorMatrix type="saturate" values="0" />
+      </filter>
+    </defs>
+    <g>
+      <rect width="200" height="200" fill="#16273d" />
+      <g filter="url(#sf-avatar-2250878267)" transform="rotate(-4.6 100 100)">
+        <ellipse cx="77.51546245766804" cy="80.47216986073181" rx="99.02939504943788" ry="83.60726229846478" fill="#16273d" /><ellipse cx="123.1595061160624" cy="84.48975236155093" rx="93.99261440732516" ry="103.69170071091503" fill="#96a4e2" /><ellipse cx="122.63461945578456" cy="176.673753131181" rx="88.71942589990795" ry="96.91035786643624" fill="#77c6d4" />
+      </g>
+      <rect width="200" height="200" filter="url(#gr-avatar-2250878267)" opacity=".16" />
+    </g>
+    
+    <ellipse cx="78" cy="92" rx="5.5" ry="10" fill="#141418" /><ellipse cx="122" cy="92" rx="5.5" ry="10" fill="#141418" />
+    <path d="M78 118 q22 20 44 0" fill="none" stroke="#141418" stroke-width="7" stroke-linecap="round" />
+  </svg>
