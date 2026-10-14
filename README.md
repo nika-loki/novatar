@@ -8,6 +8,10 @@
 
 The same seed always produces the same avatar: byte-identical output across machines, runtimes, and replays.
 
+<p align="center">
+  <a href="https://notionduo.com/novatar"><strong>🎮 Try the interactive playground</strong></a>
+</p>
+
 - `npx novatar <seed>` — zero-config CLI exporting **SVG · PNG · WebP** stills and **animated SVG · APNG · GIF**
 - `novatar-mcp` — MCP server for AI agents (Claude, Notion AI agents, Cursor, …)
 - `novatar/server` — Web-standard HTTP handler (Vercel, Workers, Bun, Deno)
