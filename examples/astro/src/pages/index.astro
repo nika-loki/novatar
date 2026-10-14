@@ -1,0 +1,23 @@
+---
+// Inline avatars in any .astro component — no React, no client JS.
+// The core returns plain SVG strings, so generation happens at build/render
+// time and ships zero JavaScript to the browser.
+import { createNovatar, renderAnimatedSvg } from 'novatar'
+
+const seed = Astro.url.searchParams.get('seed') ?? 'justin'
+const squish = createNovatar({ seed, engine: 'squishmoji', shape: 'cat', expression: 'loving' })
+const abstract = createNovatar({ seed: 'orion', engine: 'avatars', variant: 'triton' })
+// SMIL animation (blinking + gaze drift) — works without client-side JS.
+const animated = renderAnimatedSvg({ seed: 'hero', shape: 'ufo' })
+---
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /><title>novatar on Astro</title></head>
+  <body style="font-family: sans-serif; display: flex; gap: 24px; align-items: center">
+    <Fragment set:html={squish} />
+    <Fragment set:html={abstract} />
+    <Fragment set:html={animated} />
+    <!-- or straight from the API endpoint -->
+    <img src="/api/avatar/justin.png?engine=squishmoji&shape=cat&size=128" width="128" alt="avatar" />
+  </body>
+</html>

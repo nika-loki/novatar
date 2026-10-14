@@ -162,6 +162,44 @@ Deterministic responses ship with `Cache-Control: immutable`. See
 
 ---
 
+## Astro
+
+First-class — and no React required. The core generates plain SVG strings, so
+avatars render at build time with **zero client-side JavaScript** (even the
+animated SVG blinks via SMIL, no hydration):
+
+```astro
+---
+import { createNovatar, renderAnimatedSvg } from 'novatar'
+const avatar = createNovatar({ seed: 'justin', engine: 'squishmoji', shape: 'cat', expression: 'loving' })
+const animated = renderAnimatedSvg({ seed: 'hero', shape: 'ufo' })
+---
+<Fragment set:html={avatar} />
+<Fragment set:html={animated} />
+```
+
+The HTTP handler drops into an Astro endpoint as a Web-standard
+`Request → Response` function (all formats: svg / png / webp / gif / apng /
+json, plus `?animate=true`):
+
+```ts
+// src/pages/api/avatar/[...route].ts
+import type { APIRoute } from 'astro'
+import { createNovatarHandler } from 'novatar/server'
+
+export const prerender = false // on-demand route (Astro is static by default)
+const handler = createNovatarHandler({ base: '/api/avatar' })
+export const GET: APIRoute = (ctx) => handler(ctx.request)
+```
+
+`astro dev` serves the endpoint as-is; `astro build` needs any adapter (e.g.
+`@astrojs/node`) for on-demand routes. The React components from
+`novatar/react` also work through `@astrojs/react` when you want interactive
+islands (`<Squishmoji client:load />`). Complete working project:
+[examples/astro](./examples/astro).
+
+---
+
 ## Style catalog
 
 <!-- novatar:gallery:start -->
