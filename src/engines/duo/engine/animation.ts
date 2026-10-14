@@ -11,10 +11,10 @@ import { resolveExpression, resolveShape } from "../core/resolve";
 import {
   DEFAULT_EXPRESSION,
   DEFAULT_SHAPE,
-  type SquishExpression,
-  type SquishLayout,
-  type SquishOptions,
-  type SquishShape,
+  type DuoExpression,
+  type DuoLayout,
+  type DuoOptions,
+  type DuoShape,
 } from "../types";
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
@@ -32,17 +32,17 @@ interface Transition<T> {
  * body shapes and facial expressions.
  * Maintains internal temporal state for geometry blending.
  */
-export class SquishEngine {
+export class DuoEngine {
   public name: string;
-  readonly options: Omit<SquishOptions, "shape" | "expression">;
-  private shape: SquishShape = DEFAULT_SHAPE;
-  private expression: SquishExpression = DEFAULT_EXPRESSION;
+  readonly options: Omit<DuoOptions, "shape" | "expression">;
+  private shape: DuoShape = DEFAULT_SHAPE;
+  private expression: DuoExpression = DEFAULT_EXPRESSION;
   private shapeChange: Transition<ShapeGeometry> | null = null;
   private expressionChange: Transition<ExpressionPose> | null = null;
   private traitsName = "";
   private traits: ReturnType<typeof traitsFor> | null = null;
 
-  constructor(name: string, options: SquishOptions = {}) {
+  constructor(name: string, options: DuoOptions = {}) {
     this.name = name;
     this.shape = resolveShape(name, options.shape);
     this.expression = resolveExpression(name, options.expression);
@@ -86,7 +86,7 @@ export class SquishEngine {
    * @param time The starting timestamp (in seconds) of the transition.
    * @param duration Duration of the transition in seconds (default 0.45s).
    */
-  setShape(shape: SquishShape, time: number, duration = 0.45) {
+  setShape(shape: DuoShape, time: number, duration = 0.45) {
     if (shape === this.shape) {
       if (duration === 0) this.shapeChange = null;
       return;
@@ -107,7 +107,7 @@ export class SquishEngine {
    * @param time The starting timestamp (in seconds) of the transition.
    * @param duration Duration of the transition in seconds (default 0.28s).
    */
-  setExpression(expression: SquishExpression, time: number, duration = 0.28) {
+  setExpression(expression: DuoExpression, time: number, duration = 0.28) {
     if (expression === this.expression) {
       if (duration === 0) this.expressionChange = null;
       return;
@@ -131,7 +131,7 @@ export class SquishEngine {
   layout(
     time: number,
     adjustEyes?: (eyes: FittedEye[]) => FittedEye[],
-  ): SquishLayout {
+  ): DuoLayout {
     const shape = this.shapeAt(time);
     const expression = this.expressionAt(time);
     return buildLayout(this.name, shape, expression, adjustEyes);

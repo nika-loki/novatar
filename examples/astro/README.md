@@ -26,4 +26,4 @@ npm run preview   # serve the production build
 
 The React components from `novatar/react` also work in Astro through
 `@astrojs/react` if you want interactive islands
-(`<Squish client:load />` for hover/click reactions).
+(`<Duo client:load />` for hover/click reactions).

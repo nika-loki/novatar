@@ -2,7 +2,7 @@
  * Procedural base traits deterministically generated from the seed.
  * These metrics define the physical structure and proportions of the avatar.
  */
-export interface SquishTraits {
+export interface DuoTraits {
   /** Relative horizontal width factor. */
   width: number
   /** Relative vertical height factor. */
@@ -27,11 +27,11 @@ export interface SquishTraits {
  * Resolved layout data for rendering a single frame.
  * Contains calculated SVG paths and structural matrices.
  */
-export interface SquishLayout {
+export interface DuoLayout {
   /** Generated deterministic numeric seed. */
   seed: number
   /** Underlying procedural traits used to build the layout. */
-  traits: SquishTraits
+  traits: DuoTraits
   /** Resolved SVG path data string for the avatar body. */
   body: string
   /** 

@@ -16,8 +16,8 @@ const SAMPLES = [
   { label: 'avatars · triton', opts: { engine: 'avatars', variant: 'triton' } },
   { label: 'avatars · splash', opts: { engine: 'avatars', variant: 'splash' } },
   { label: 'avatars · pebble', opts: { engine: 'avatars', variant: 'pebble' } },
-  { label: 'squish · cat · loving', opts: { engine: 'squish', shape: 'cat', expression: 'loving' } },
-  { label: 'squish · star · taygeta bg', opts: { engine: 'squish', shape: 'star', expression: 'happy', backgroundStyle: 'taygeta' } },
+  { label: 'duo · cat · loving', opts: { engine: 'duo', shape: 'cat', expression: 'loving' } },
+  { label: 'duo · star · taygeta bg', opts: { engine: 'duo', shape: 'star', expression: 'happy', backgroundStyle: 'taygeta' } },
 ]
 
 const swatches = (colors) =>
@@ -64,7 +64,7 @@ const fragment = `<div id="novatar-palette-demo">
     }
   </style>
   <h2>Seeded vs custom palettes — same seed, both engines</h2>
-  <p class="pd-note">Every column is the same seed <code>${SEED}</code>: geometry never changes, only the palette. Column 1 is the palette the seed generates; the rest pass <code>--colors</code>. npx novatar ${SEED} --engine squish --shape cat --colors '#ff9a3c,#ff5c8a,#c13584,#701a75,#fde68a'</p>
+  <p class="pd-note">Every column is the same seed <code>${SEED}</code>: geometry never changes, only the palette. Column 1 is the palette the seed generates; the rest pass <code>--colors</code>. npx novatar ${SEED} --engine duo --shape cat --colors '#ff9a3c,#ff5c8a,#c13584,#701a75,#fde68a'</p>
   <div class="pd-grid">
     <div class="pd-cell pd-head"></div>
     ${header}

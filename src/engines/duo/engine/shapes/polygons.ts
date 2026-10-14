@@ -1,11 +1,11 @@
-import type { SquishTraits } from "../../types";
+import type { DuoTraits } from "../../types";
 
 const TAU = Math.PI * 2;
 
 const wave = (angle: number, frequency: number, cosine = 0, sine = 0) =>
   cosine * Math.cos(angle * frequency) + sine * Math.sin(angle * frequency);
 
-function polarPoint(angle: number, radius: number, traits: SquishTraits) {
+function polarPoint(angle: number, radius: number, traits: DuoTraits) {
   return {
     x: traits.width * Math.cos(angle) * radius,
     y: traits.height * Math.sin(angle) * radius,
@@ -18,7 +18,7 @@ function roundedPolygonPoint(
   radius: number,
   cornerRadius: number,
   rotation: number,
-  traits: SquishTraits,
+  traits: DuoTraits,
 ) {
   const ray = { x: Math.cos(angle), y: Math.sin(angle) };
   const halfInterior = ((sides - 2) * Math.PI) / (2 * sides);
@@ -93,42 +93,42 @@ function roundedPolygonPoint(
 /**
  * Returns the procedural edge point for the 'triangle' shape.
  */
-export function trianglePoint(traits: SquishTraits, angle: number) {
+export function trianglePoint(traits: DuoTraits, angle: number) {
   return roundedPolygonPoint(angle, 3, 1.46, 0.34, -Math.PI / 2, traits);
 }
 
 /**
  * Returns the procedural edge point for the 'hexagon' shape.
  */
-export function hexagonPoint(traits: SquishTraits, angle: number) {
+export function hexagonPoint(traits: DuoTraits, angle: number) {
   return roundedPolygonPoint(angle, 6, 1.0802, 0.26, 0, traits);
 }
 
 /**
  * Returns the procedural edge point for the 'square' shape.
  */
-export function squarePoint(traits: SquishTraits, angle: number) {
+export function squarePoint(traits: DuoTraits, angle: number) {
   return roundedPolygonPoint(angle, 4, 1.2536, 0.25, Math.PI / 4, traits);
 }
 
 /**
  * Returns the procedural edge point for the 'pentagon' shape.
  */
-export function pentagonPoint(traits: SquishTraits, angle: number) {
+export function pentagonPoint(traits: DuoTraits, angle: number) {
   return roundedPolygonPoint(angle, 5, 1.139, 0.25, -Math.PI / 2, traits);
 }
 
 /**
  * Returns the procedural edge point for the 'octagon' shape.
  */
-export function octagonPoint(traits: SquishTraits, angle: number) {
+export function octagonPoint(traits: DuoTraits, angle: number) {
   return roundedPolygonPoint(angle, 8, 1.0365, 0.2, Math.PI / 8, traits);
 }
 
 /**
  * Returns the procedural edge point for the 'star' shape.
  */
-export function starPoint(traits: SquishTraits, angle: number) {
+export function starPoint(traits: DuoTraits, angle: number) {
   const radius = 0.88 + 0.22 * Math.cos(angle * 5);
   return {
     x: traits.width * Math.cos(angle) * radius,
@@ -139,7 +139,7 @@ export function starPoint(traits: SquishTraits, angle: number) {
 /**
  * Returns the procedural edge point for the 'flower' shape.
  */
-export function flowerPoint(traits: SquishTraits, angle: number) {
+export function flowerPoint(traits: DuoTraits, angle: number) {
   const radius = 0.9375 + 0.1125 * Math.cos(angle * 8);
   return {
     x: traits.width * Math.cos(angle) * radius,
@@ -221,13 +221,13 @@ const dropRadius = (a: number) =>
 /**
  * Returns the procedural edge point for the 'cloud' shape.
  */
-export function cloudPoint(traits: SquishTraits, angle: number) {
+export function cloudPoint(traits: DuoTraits, angle: number) {
   return polarPoint(angle, cloudRadius(angle), traits);
 }
 
 /**
  * Returns the procedural edge point for the 'drop' shape.
  */
-export function dropPoint(traits: SquishTraits, angle: number) {
+export function dropPoint(traits: DuoTraits, angle: number) {
   return polarPoint(angle, dropRadius(angle), traits);
 }

@@ -1,7 +1,7 @@
 /**
  * Animated avatar exports — animated SVG (SMIL), APNG, and GIF.
  *
- * The React <Squish /> component animates via requestAnimationFrame;
+ * The React <Duo /> component animates via requestAnimationFrame;
  * these exporters reproduce its exact steady-state motion (autonomous
  * blinking + gaze drift, optional wobble) as pure functions of time, so
  * every format shows identical movement:
@@ -16,15 +16,15 @@
  * SMIL keyframe list) wrap seamlessly. Durations are snapped to a multiple
  * of the blink cycle for the same reason.
  */
-import { renderLayout } from './engines/squish/core/render'
-import { backgroundMarkup } from './engines/squish/engine/backgrounds'
-import { stableId, escapeXml, format } from './engines/squish/core/svg'
-import { resolveBackgroundStyle } from './engines/squish/core/resolve'
-import { resolveLayout } from './engines/squish/engine/layout'
-import { BACKGROUND_STYLES, type SquishOptions, type SquishLayout } from './engines/squish/types'
+import { renderLayout } from './engines/duo/core/render'
+import { backgroundMarkup } from './engines/duo/engine/backgrounds'
+import { stableId, escapeXml, format } from './engines/duo/core/svg'
+import { resolveBackgroundStyle } from './engines/duo/core/resolve'
+import { resolveLayout } from './engines/duo/engine/layout'
+import { BACKGROUND_STYLES, type DuoOptions, type DuoLayout } from './engines/duo/types'
 import { renderPixmap } from './raster'
 
-// Motion constants mirrored from the React component (Squish.tsx).
+// Motion constants mirrored from the React component (Duo.tsx).
 const BLINK_PERIOD = 4.7
 const BLINK_PHASE_OFFSET = 1.35
 const BLINK_OPEN_WINDOW = 0.18
@@ -40,7 +40,7 @@ const WOBBLE_ROTATION = 0.45
 export interface AnimatedAvatarOptions {
   /** Deterministic identity. Same seed → same avatar and same motion. */
   seed: string
-  /** Body shape id or "all". Defaults like createSquish. */
+  /** Body shape id or "all". Defaults like createDuo. */
   shape?: string
   /** Expression id or "all". */
   expression?: string
@@ -63,7 +63,7 @@ export interface AnimatedAvatarOptions {
 export interface AnimationFrame {
   time: number
   /** The full layout with time-adjusted eyes (body is constant). */
-  layout: SquishLayout
+  layout: DuoLayout
 }
 
 function lidAt(time: number): number {
@@ -104,7 +104,7 @@ function effectiveFps(fps: number | undefined): number {
   return value
 }
 
-function cloneLayoutWithEyes(layout: SquishLayout, eyes: SquishLayout['eyes']): SquishLayout {
+function cloneLayoutWithEyes(layout: DuoLayout, eyes: DuoLayout['eyes']): DuoLayout {
   return { ...layout, eyes }
 }
 
@@ -120,7 +120,7 @@ export function solveAnimationFrames(options: AnimatedAvatarOptions): {
   const duration = effectiveDuration(options.duration)
   const fps = effectiveFps(options.fps)
   const count = Math.max(2, Math.round(duration * fps))
-  const base = resolveLayout(options.seed, options as SquishOptions)
+  const base = resolveLayout(options.seed, options as DuoOptions)
 
   const frames: AnimationFrame[] = []
   for (let i = 0; i < count; i++) {
@@ -283,7 +283,7 @@ function wobbleRotateOnly(time: number, loop: number): string {
 }
 
 function resolveLayoutOptionsSize(options: AnimatedAvatarOptions): number | undefined {
-  return (options as SquishOptions).size
+  return (options as DuoOptions).size
 }
 
 export interface RasterAnimationOptions extends AnimatedAvatarOptions {
@@ -297,7 +297,7 @@ function frameSvg(frame: AnimationFrame, options: AnimatedAvatarOptions): string
   const svg = renderLayout(frame.layout, {
     seed: options.seed,
     backgroundStyle: options.backgroundStyle,
-  } as SquishOptions)
+  } as DuoOptions)
   if (options.wobble) {
     const wobble = wobbleAt(frame.time, Number(effectiveDuration(options.duration)))
     return svg.replace('style="overflow:visible"', `style="overflow:visible;transform:${wobble}"`)

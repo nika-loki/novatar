@@ -4,34 +4,34 @@ import { format, stableId, escapeXml } from "./svg";
 import { resolveBackgroundStyle, resolveExpression, resolveShape } from "./resolve";
 import { backgroundMarkup } from "../engine/backgrounds";
 import {
-  type SquishOptions,
-  type SquishLayout,
-  type SquishJson,
-  SquishOutputFormat,
+  type DuoOptions,
+  type DuoLayout,
+  type DuoJson,
+  DuoOutputFormat,
   DEFAULT_SEED,
   BACKGROUND_STYLES,
 } from "../types";
 
 export function createAvatar(
   seed: string,
-  options: SquishOptions & { format: "json" | typeof SquishOutputFormat.json },
-): SquishJson;
+  options: DuoOptions & { format: "json" | typeof DuoOutputFormat.json },
+): DuoJson;
 export function createAvatar(
   seed: string,
-  options?: SquishOptions & { format?: "svg" | typeof SquishOutputFormat.svg },
+  options?: DuoOptions & { format?: "svg" | typeof DuoOutputFormat.svg },
 ): string;
 export function createAvatar(
-  options: SquishOptions & { format: "json" | typeof SquishOutputFormat.json },
-): SquishJson;
+  options: DuoOptions & { format: "json" | typeof DuoOutputFormat.json },
+): DuoJson;
 export function createAvatar(
-  options?: SquishOptions & { format?: "svg" | typeof SquishOutputFormat.svg },
+  options?: DuoOptions & { format?: "svg" | typeof DuoOutputFormat.svg },
 ): string;
 export function createAvatar(
-  seedOrOptions?: string | SquishOptions,
-  maybeOptions?: SquishOptions,
-): string | SquishJson {
+  seedOrOptions?: string | DuoOptions,
+  maybeOptions?: DuoOptions,
+): string | DuoJson {
   let seed = DEFAULT_SEED;
-  let options: SquishOptions = {};
+  let options: DuoOptions = {};
 
   if (typeof seedOrOptions === "string") {
     seed = seedOrOptions.trim() || DEFAULT_SEED;
@@ -61,8 +61,8 @@ export function createAvatar(
 }
 
 export function renderLayout(
-  layout: SquishLayout,
-  options: SquishOptions = {},
+  layout: DuoLayout,
+  options: DuoOptions = {},
 ): string {
   const {
     size: requestedSize,

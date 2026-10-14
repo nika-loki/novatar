@@ -39,7 +39,7 @@ USAGE
 
 ENGINES
   avatars     21 generative variants in 4 families (gradient, fluid, classic, paletteless)
-  squish  21 body shapes x 22 expressions x 6 backgrounds (aliases: squish, emoji)
+  duo  21 body shapes x 22 expressions x 6 backgrounds (aliases: duo, emoji)
   auto        pick deterministically from the seed (default)
 
 SEEDS
@@ -50,11 +50,11 @@ SEEDS
   git log --format=%an | sort -u | novatar - --png --out 'team/{seed}.png'
 
 STYLE OPTIONS
-  --engine <id>                   Engine: avatars | squish | auto (default auto)
+  --engine <id>                   Engine: avatars | duo | auto (default auto)
   --variant <id|family|all>       [avatars] variant, family, or "all"
-  --shape <id|all>                [squish] body shape
-  --expression <id|all>           [squish] facial expression
-  --background <id|all>           [squish] background style (alias: --background-style)
+  --shape <id|all>                [duo] body shape
+  --expression <id|all>           [duo] facial expression
+  --background <id|all>           [duo] background style (alias: --background-style)
   --colors <hex,hex,hex,hex,hex>  Exactly 5 hex colors, both engines (overrides the
                                   seeded palette; geometry stays seed-driven)
   --circle                        [avatars] clip to a full circle
@@ -67,8 +67,8 @@ OUTPUT FORMATS
   --format json                   Metadata + svg + dataUri (array in batch)
   --format png                    Still PNG
   --format webp                   Still WebP (needs optional sharp: npm i sharp)
-  --format gif                    ANIMATED GIF — squish engine (blinks, gazes)
-  --format apng                   ANIMATED APNG with alpha — squish engine
+  --format gif                    ANIMATED GIF — duo engine (blinks, gazes)
+  --format apng                   ANIMATED APNG with alpha — duo engine
   --animate                       With --format svg/json: animated (SMIL) SVG
 
 ANIMATION OPTIONS (gif / apng / --animate)
@@ -92,7 +92,7 @@ INTROSPECTION & SERVERS
 
 EXAMPLES
   novatar justin > justin.svg
-  novatar justin --engine squish --shape cat --expression loving --size 256
+  novatar justin --engine duo --shape cat --expression loving --size 256
   novatar justin --engine avatars --variant triton --format json
   novatar justin --png --size 512 --out avatar.png
   novatar justin --webp --quality 95 --out avatar.webp
@@ -104,7 +104,7 @@ EXAMPLES
   novatar --batch alice,bob,carol --apng --out 'team/{seed}.png'
   novatar --random --count 12 --engine avatars --variant all --out 'grid/{seed}.svg'
   echo $USER_ID | novatar - --json
-  novatar --list --engine squish
+  novatar --list --engine duo
 
 Exit codes: 0 success, 1 usage or generation error.
 Determinism: identical seed + options produce byte-identical output.
@@ -406,11 +406,11 @@ async function generatePayload(args: ParsedArgs, seed: string): Promise<Payload>
   }
 
   if (args.format === 'json') {
-    if (args.animate && resolveEngine(seed, args.options.engine) === NovatarEngine.squish) {
+    if (args.animate && resolveEngine(seed, args.options.engine) === NovatarEngine.duo) {
       const svg = renderAnimatedSvg(animation)
       const json = {
         seed,
-        engine: NovatarEngine.squish,
+        engine: NovatarEngine.duo,
         animated: true,
         fps: animation.fps ?? 12,
         duration: args.duration,
@@ -429,7 +429,7 @@ async function generatePayload(args: ParsedArgs, seed: string): Promise<Payload>
   if (args.format === 'svg') {
     if (args.animate) {
       const engine = resolveEngine(seed, args.options.engine)
-      if (engine === NovatarEngine.squish) {
+      if (engine === NovatarEngine.duo) {
         return { text: renderAnimatedSvg(animation), mime: MIME.svg }
       }
       // avatars engine: built-in declarative animation, animate flag already set
@@ -455,7 +455,7 @@ async function generatePayload(args: ParsedArgs, seed: string): Promise<Payload>
     }
   }
 
-  // gif / apng — animated raster, squish engine
+  // gif / apng — animated raster, duo engine
   const raster = { ...animation, width: args.options.size ?? 256, gifBackground: args.gifBackground }
   if (args.format === 'gif') {
     return { bytes: await renderAnimatedGif(raster), mime: MIME.gif }
@@ -497,16 +497,16 @@ async function main(): Promise<number> {
     fail('--fps/--duration/--wobble only apply to animated exports (gif, apng, or --animate)')
   }
 
-  // Animation defaults to the squish engine (the expressive animated
+  // Animation defaults to the duo engine (the expressive animated
   // one), mirroring the gif/apng rule. Explicit --engine avatars keeps the
   // avatars engine's built-in animation for svg.
   const wantsAnimation = args.animate || ANIMATED_RASTER.includes(args.format)
   if (wantsAnimation) {
     if (!args.options.engine) {
-      args.options.engine = NovatarEngine.squish
-      note(args.quiet, 'animation: engine defaulted to squish')
+      args.options.engine = NovatarEngine.duo
+      note(args.quiet, 'animation: engine defaulted to duo')
     } else if (ANIMATED_RASTER.includes(args.format) && resolveEngine('probe', args.options.engine) === NovatarEngine.avatars) {
-      fail('animated raster exports (gif/apng) require the squish engine')
+      fail('animated raster exports (gif/apng) require the duo engine')
     }
   }
 

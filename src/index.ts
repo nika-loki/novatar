@@ -4,7 +4,7 @@
  * One package, two engines, one identity model:
  *   engine "avatars"    → 21 generative variants (gradient / fluid / classic / paletteless)
  *                         adapted from SpaceUI (MIT)
- *   engine "squish" → 21 shapes × 22 expressions × 6 backgrounds
+ *   engine "duo" → 21 shapes × 22 expressions × 6 backgrounds
  *                         adapted from SpaceUI (MIT)
  *
  * The same seed always produces the same avatar on every machine, runtime,
@@ -36,14 +36,14 @@ export type { AnimatedAvatarOptions, RasterAnimationOptions, AnimationFrame } fr
 export * from './engines/avatars'
 
 // ---------------------------------------------------------------------------
-// Engine: squish (character-engine API)
+// Engine: duo (character-engine API)
 // ---------------------------------------------------------------------------
-export * from './engines/squish'
+export * from './engines/duo'
 
 import { createAvatar } from './engines/avatars'
-import { createSquish } from './engines/squish'
-import { SHAPE_VALUES, EXPRESSION_VALUES, BACKGROUND_STYLE_VALUES } from './engines/squish'
-import type { SquishOptions, SquishJson } from './engines/squish'
+import { createDuo } from './engines/duo'
+import { SHAPE_VALUES, EXPRESSION_VALUES, BACKGROUND_STYLE_VALUES } from './engines/duo'
+import type { DuoOptions, DuoJson } from './engines/duo'
 import {
   AvatarFamily,
   getFamilyVariants,
@@ -56,7 +56,7 @@ import type { AvatarJson, CreateAvatarOptions } from './engines/avatars'
 
 export const NovatarEngine = {
   avatars: 'avatars',
-  squish: 'squish',
+  duo: 'duo',
 } as const
 export type NovatarEngineId = (typeof NovatarEngine)[keyof typeof NovatarEngine]
 export type NovatarEngineChoice = NovatarEngineId | 'auto'
@@ -71,12 +71,12 @@ const ENGINE_ALIASES: Record<string, NovatarEngineId> = {
   avatars: NovatarEngine.avatars,
   avatar: NovatarEngine.avatars,
   art: NovatarEngine.avatars,
-  squish: NovatarEngine.squish,
-  emoji: NovatarEngine.squish,
-  character: NovatarEngine.squish,
+  duo: NovatarEngine.duo,
+  emoji: NovatarEngine.duo,
+  character: NovatarEngine.duo,
 }
 
-const ENGINES: readonly NovatarEngineId[] = [NovatarEngine.avatars, NovatarEngine.squish]
+const ENGINES: readonly NovatarEngineId[] = [NovatarEngine.avatars, NovatarEngine.duo]
 
 /** Stable default identity seed. */
 export const DEFAULT_SEED = 'Space UI'
@@ -99,9 +99,9 @@ export interface NovatarOptions {
   /** Deterministic identity. Same seed → same avatar, forever. Defaults to "Space UI". */
   seed?: string
   /**
-   * Which engine renders the avatar: "avatars" (21 variants), "squish"
+   * Which engine renders the avatar: "avatars" (21 variants), "duo"
    * (shapes × expressions), or "auto" to pick deterministically from the seed.
-   * Aliases: "squish", "emoji", "avatar", "art".
+   * Aliases: "duo", "emoji", "avatar", "art".
    */
   engine?: NovatarEngineChoice | string
   /** Output format: "svg" (default) or "json". PNG is available via the CLI / raster module. */
@@ -109,7 +109,7 @@ export interface NovatarOptions {
   /** Rendered size in pixels. Omitted → each engine's native default. */
 
   // --- engine "avatars" options -------------------------------------------
-  /** Variant id ("triton"), family ("fluid"), or "all". Ignored by squish. */
+  /** Variant id ("triton"), family ("fluid"), or "all". Ignored by duo. */
   variant?: string
   /** Clip to a full circle (avatars engine only). */
   circle?: boolean
@@ -120,12 +120,12 @@ export interface NovatarOptions {
   /** Enable animation where the variant supports it (avatars engine only). */
   animate?: boolean
 
-  // --- engine "squish" options ----------------------------------------
-  /** Body shape id or "all" (squish engine only). */
+  // --- engine "duo" options ----------------------------------------
+  /** Body shape id or "all" (duo engine only). */
   shape?: string
-  /** Expression id or "all" (squish engine only). */
+  /** Expression id or "all" (duo engine only). */
   expression?: string
-  /** Background style id or "all" (squish engine only). */
+  /** Background style id or "all" (duo engine only). */
   backgroundStyle?: string
   size?: number
 }
@@ -142,11 +142,11 @@ export interface NovatarJson {
   circle?: boolean
   effect?: string
   animate?: boolean
-  // Present when engine === "squish":
+  // Present when engine === "duo":
   shape?: string
   expression?: string
   backgroundStyle?: string
-  layout?: SquishJson['layout']
+  layout?: DuoJson['layout']
 }
 
 /** Normalizes engine aliases and picks deterministically for "auto". */
@@ -157,7 +157,7 @@ export function resolveEngine(seed: string, engine?: NovatarEngineChoice | strin
   }
   const id = ENGINE_ALIASES[String(engine).trim().toLowerCase()]
   if (!id) {
-    throw new RangeError(`Unknown engine: ${String(engine)}. Use "avatars", "squish", or "auto".`)
+    throw new RangeError(`Unknown engine: ${String(engine)}. Use "avatars", "duo", or "auto".`)
   }
   return id
 }
@@ -173,17 +173,17 @@ export function createNovatar(options: NovatarOptions = {}): string | NovatarJso
   const seed = (options.seed && options.seed.trim()) || DEFAULT_SEED
   const engine = resolveEngine(seed, options.engine)
 
-  if (engine === NovatarEngine.squish) {
-    const squishOptions: Omit<SquishOptions, 'format'> = {
+  if (engine === NovatarEngine.duo) {
+    const duoOptions: Omit<DuoOptions, 'format'> = {
       seed,
       size: options.size,
-      shape: options.shape as SquishOptions['shape'],
-      expression: options.expression as SquishOptions['expression'],
-      backgroundStyle: options.backgroundStyle as SquishOptions['backgroundStyle'],
+      shape: options.shape as DuoOptions['shape'],
+      expression: options.expression as DuoOptions['expression'],
+      backgroundStyle: options.backgroundStyle as DuoOptions['backgroundStyle'],
       colors: options.colors,
     }
     if (format === NovatarOutputFormat.json) {
-      const json = createSquish({ ...squishOptions, format: 'json' })
+      const json = createDuo({ ...duoOptions, format: 'json' })
       return {
         seed: json.seed,
         engine,
@@ -195,7 +195,7 @@ export function createNovatar(options: NovatarOptions = {}): string | NovatarJso
         layout: json.layout,
       }
     }
-    return createSquish(squishOptions)
+    return createDuo(duoOptions)
   }
 
   const avatarOptions: Omit<CreateAvatarOptions, 'format'> = {
@@ -233,7 +233,7 @@ export interface NovatarEngineCatalog {
   /** avatars engine: variants grouped by visual family. */
   families?: Record<string, string[]>
   variants?: string[]
-  /** squish engine catalogs. */
+  /** duo engine catalogs. */
   shapes?: string[]
   expressions?: string[]
   backgrounds?: string[]
@@ -264,15 +264,15 @@ export function listNovatarStyles(engine?: NovatarEngineChoice | string): Novata
     ],
   }
 
-  const squishCatalog: NovatarEngineCatalog = {
-    id: NovatarEngine.squish,
-    description: 'Squishy expressive characters (21 shapes × 22 expressions × 6 backgrounds).',
+  const duoCatalog: NovatarEngineCatalog = {
+    id: NovatarEngine.duo,
+    description: 'Expressive character avatars (21 shapes × 22 expressions × 6 backgrounds).',
     shapes: [...SHAPE_VALUES],
     expressions: [...EXPRESSION_VALUES],
     backgrounds: [...BACKGROUND_STYLE_VALUES],
   }
 
   if (wanted === NovatarEngine.avatars) return { engines: [avatarsCatalog] }
-  if (wanted === NovatarEngine.squish) return { engines: [squishCatalog] }
-  return { engines: [avatarsCatalog, squishCatalog] }
+  if (wanted === NovatarEngine.duo) return { engines: [duoCatalog] }
+  return { engines: [avatarsCatalog, duoCatalog] }
 }

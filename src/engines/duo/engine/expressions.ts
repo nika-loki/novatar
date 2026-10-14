@@ -1,4 +1,4 @@
-import type { SquishExpression } from '../types'
+import type { DuoExpression } from '../types'
 
 /**
  * Represents an SVG transformation matrix for a single eye.
@@ -29,7 +29,7 @@ const pair = (width: number, height: number, left: EyeMatrix, right: EyeMatrix):
   right: eye(width, height, right)
 })
 
-const POSES: Record<SquishExpression, ExpressionPose> = {
+const POSES: Record<DuoExpression, ExpressionPose> = {
   neutral: pair(18.6, 41.2, [0.96, -0.19, 0.15, 0.97, 20.09, 13.81], [0.71, -0.24, 0.15, 0.97, 59.83, 3.56]),
   attentive: pair(21, 44, [0.98, -0.09, 0.08, 0.99, -17.03, -5.48], [0.94, -0.04, 0.08, 0.99, 29.57, -8.71]),
   surprised: pair(45, 47, [0.96, 0.02, 0, 1, -22.45, 4.18], [0.93, -0.02, 0, 1, 32.93, 4.29]),
@@ -57,7 +57,7 @@ const POSES: Record<SquishExpression, ExpressionPose> = {
 /**
  * Returns the transformation data for a given expression.
  */
-export const expressionPose = (expression: SquishExpression) =>
+export const expressionPose = (expression: DuoExpression) =>
   POSES[expression] ?? POSES.neutral
 
 export function blendExpression(from: ExpressionPose, to: ExpressionPose, amount: number): ExpressionPose {

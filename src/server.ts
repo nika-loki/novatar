@@ -83,7 +83,7 @@ function optionsFromQuery(url: URL): NovatarOptions {
 function routeInfo(baseUrl: string): Record<string, unknown> {
   return {
     name: 'novatar',
-    description: 'Deterministic generative SVG avatars (avatars + squish engines).',
+    description: 'Deterministic generative SVG avatars (avatars + duo engines).',
     routes: {
       [`${baseUrl}/`]: 'this documentation',
       [`${baseUrl}/:seed`]: 'SVG avatar for the seed',
@@ -92,11 +92,11 @@ function routeInfo(baseUrl: string): Record<string, unknown> {
       [`${baseUrl}/styles`]: 'style catalog (JSON)',
     },
     query: {
-      engine: 'avatars | squish | auto (default auto)',
+      engine: 'avatars | duo | auto (default auto)',
       variant: 'avatars engine: variant, family, or all',
-      shape: 'squish engine: shape or all',
-      expression: 'squish engine: expression or all',
-      background: 'squish engine: background style or all',
+      shape: 'duo engine: shape or all',
+      expression: 'duo engine: expression or all',
+      background: 'duo engine: background style or all',
       size: 'pixels (1-4096)',
       circle: 'true|false (avatars engine)',
       effect: 'none|noise (avatars engine)',
@@ -161,12 +161,12 @@ export function createNovatarHandler(options: NovatarHandlerOptions = {}): (requ
       resolvedOptions.seed = queryOptions.seed
     }
 
-    // Animation defaults to the squish engine; gif/apng require it.
+    // Animation defaults to the duo engine; gif/apng require it.
     if ((animate || format === 'gif' || format === 'apng') && !resolvedOptions.engine) {
-      resolvedOptions.engine = 'squish'
+      resolvedOptions.engine = 'duo'
     }
     if ((format === 'gif' || format === 'apng') && resolvedOptions.engine && resolveEngine(seed, resolvedOptions.engine) === 'avatars') {
-      return jsonResponse({ error: 'animated raster exports (gif/apng) require the squish engine' }, 400)
+      return jsonResponse({ error: 'animated raster exports (gif/apng) require the duo engine' }, 400)
     }
 
     try {
@@ -221,7 +221,7 @@ export function createNovatarHandler(options: NovatarHandlerOptions = {}): (requ
         })
       }
 
-      if (format === 'svg' && animate && resolveEngine(seed, resolvedOptions.engine) === 'squish') {
+      if (format === 'svg' && animate && resolveEngine(seed, resolvedOptions.engine) === 'duo') {
         const { renderAnimatedSvg } = await import('./animation')
         const svg = renderAnimatedSvg(animationCommon)
         return new Response(svg, {

@@ -5,34 +5,34 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { SquishEngine } from "../engines/squish/engine/animation";
-import { renderLayout } from "../engines/squish/core/render";
-import { resolveExpression, resolveShape } from "../engines/squish/core/resolve";
+import { DuoEngine } from "../engines/duo/engine/animation";
+import { renderLayout } from "../engines/duo/core/render";
+import { resolveExpression, resolveShape } from "../engines/duo/core/resolve";
 import {
   DEFAULT_BACKGROUND_STYLE,
   DEFAULT_EXPRESSION,
   DEFAULT_SEED,
   DEFAULT_SHAPE,
   EXPRESSIONS,
-  type SquishBackgroundStyleChoice,
-  type SquishExpression,
-  type SquishExpressionChoice,
-  type SquishLayout,
-  type SquishShapeChoice,
-} from "../engines/squish/types";
+  type DuoBackgroundStyleChoice,
+  type DuoExpression,
+  type DuoExpressionChoice,
+  type DuoLayout,
+  type DuoShapeChoice,
+} from "../engines/duo/types";
 
 /**
- * Properties for configuring the React Squish component.
+ * Properties for configuring the React Duo component.
  */
-export interface SquishProps {
+export interface DuoProps {
   /** Width and height of the SVG. Defaults to `120`. */
   size?: number | string;
   /** Deterministic seed string generating the avatar's core geometry and palette. Defaults to `DEFAULT_SEED` ("Space UI"). */
   seed?: string;
   /** Body shape, or `"all"` to pick deterministically from the seed. Defaults to `circle`. */
-  shape?: SquishShapeChoice;
+  shape?: DuoShapeChoice;
   /** Facial expression, or `"all"` to pick deterministically from the seed. Defaults to `neutral`. */
-  expression?: SquishExpressionChoice;
+  expression?: DuoExpressionChoice;
   /** Freezes the avatar animation at a specific time in seconds (useful for SSR or static rendering). */
   frozenAt?: number;
   /** Enables an interactive click animation (temporarily changes expression). */
@@ -48,7 +48,7 @@ export interface SquishProps {
   /** Multiplier for the automatic gaze drift range. Set to 0 to lock eyes forward. */
   gazeRange?: number;
   /** Background style, or `"all"` to pick deterministically from the seed. Defaults to `solid`. */
-  backgroundStyle?: SquishBackgroundStyleChoice;
+  backgroundStyle?: DuoBackgroundStyleChoice;
   /** Whether the avatar breathes and drifts its gaze. Defaults to `true`. */
   animate?: boolean;
   /** Adds a gentle floating CSS transform effect. Defaults to `false`. */
@@ -81,9 +81,9 @@ export const DEFAULT_VALUE = {
 
 const now = () => performance.now() / 1000;
 
-type Eye = SquishLayout["eyes"][number];
+type Eye = DuoLayout["eyes"][number];
 
-function SquishComponent({
+function DuoComponent({
   size = DEFAULT_VALUE.size,
   seed = DEFAULT_VALUE.seed,
   shape = DEFAULT_VALUE.shape,
@@ -101,28 +101,28 @@ function SquishComponent({
   blinkTrigger = DEFAULT_VALUE.blinkTrigger,
   className,
   style,
-}: SquishProps) {
+}: DuoProps) {
   const isLive = frozenAt === undefined;
   const resolvedShape = resolveShape(seed, shape);
   const resolvedStartExpression = resolveExpression(seed, expression);
-  const engineRef = useRef<SquishEngine | null>(null);
+  const engineRef = useRef<DuoEngine | null>(null);
   if (!engineRef.current) {
-    engineRef.current = new SquishEngine(seed, {
+    engineRef.current = new DuoEngine(seed, {
       shape: resolvedShape,
       expression: resolvedStartExpression,
     });
   }
   const engine = engineRef.current;
-  const [clickOverride, setClickOverride] = useState<SquishExpression | null>(
+  const [clickOverride, setClickOverride] = useState<DuoExpression | null>(
     null,
   );
-  const [hoverOverride, setHoverOverride] = useState<SquishExpression | null>(
+  const [hoverOverride, setHoverOverride] = useState<DuoExpression | null>(
     null,
   );
   const [frameTime, setFrameTime] = useState(frozenAt ?? 0);
   const blinkAt = useRef(Number.NEGATIVE_INFINITY);
   const clickRestore = useRef<number | null>(null);
-  const clickExpression = useRef<SquishExpression | null>(null);
+  const clickExpression = useRef<DuoExpression | null>(null);
   const reducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -272,4 +272,4 @@ function SquishComponent({
   );
 }
 
-export const Squish = memo(SquishComponent);
+export const Duo = memo(DuoComponent);

@@ -1,9 +1,9 @@
-import type { SquishTraits } from "../../types";
+import type { DuoTraits } from "../../types";
 
 /**
  * Returns the procedural edge point for the 'circle' body shape.
  */
-export function circlePoint(traits: SquishTraits, angle: number) {
+export function circlePoint(traits: DuoTraits, angle: number) {
   return {
     x: traits.width * Math.cos(angle),
     y: traits.height * Math.sin(angle),
@@ -13,7 +13,7 @@ export function circlePoint(traits: SquishTraits, angle: number) {
 /**
  * Returns the procedural edge point for the 'pebble' body shape (asymmetric organic curve).
  */
-export function pebblePoint(traits: SquishTraits, angle: number) {
+export function pebblePoint(traits: DuoTraits, angle: number) {
   const direction = { x: Math.cos(angle), y: Math.sin(angle) };
   let hit = 0;
 
@@ -85,7 +85,7 @@ export function pebblePoint(traits: SquishTraits, angle: number) {
 /**
  * Returns the procedural edge point for the 'squircle' (rounded square) body shape.
  */
-export function squirclePoint(traits: SquishTraits, angle: number) {
+export function squirclePoint(traits: DuoTraits, angle: number) {
   const cosine = Math.cos(angle);
   const sine = Math.sin(angle);
   const radius =
@@ -99,7 +99,7 @@ export function squirclePoint(traits: SquishTraits, angle: number) {
 /**
  * Returns the procedural edge point for the 'capsule' body shape.
  */
-export function capsulePoint(traits: SquishTraits, angle: number) {
+export function capsulePoint(traits: DuoTraits, angle: number) {
   const xDirection = Math.cos(angle);
   const yDirection = Math.sin(angle);
   const candidates: number[] = [];

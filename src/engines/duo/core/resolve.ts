@@ -6,12 +6,12 @@ import {
   DEFAULT_SHAPE,
   EXPRESSION_VALUES,
   SHAPE_VALUES,
-  type SquishBackgroundStyle,
-  type SquishBackgroundStyleChoice,
-  type SquishExpression,
-  type SquishExpressionChoice,
-  type SquishShape,
-  type SquishShapeChoice,
+  type DuoBackgroundStyle,
+  type DuoBackgroundStyleChoice,
+  type DuoExpression,
+  type DuoExpressionChoice,
+  type DuoShape,
+  type DuoShapeChoice,
 } from "../types";
 
 function pickFromPool<T extends string>(
@@ -39,8 +39,8 @@ function resolveFromPool<T extends string>(
 
 export function resolveShape(
   seed: string,
-  shape?: SquishShapeChoice | string,
-): SquishShape {
+  shape?: DuoShapeChoice | string,
+): DuoShape {
   return resolveFromPool(
     seed,
     shape,
@@ -53,8 +53,8 @@ export function resolveShape(
 
 export function resolveExpression(
   seed: string,
-  expression?: SquishExpressionChoice | string,
-): SquishExpression {
+  expression?: DuoExpressionChoice | string,
+): DuoExpression {
   return resolveFromPool(
     seed,
     expression,
@@ -67,8 +67,8 @@ export function resolveExpression(
 
 export function resolveBackgroundStyle(
   seed: string,
-  backgroundStyle?: SquishBackgroundStyleChoice | string,
-): SquishBackgroundStyle {
+  backgroundStyle?: DuoBackgroundStyleChoice | string,
+): DuoBackgroundStyle {
   return resolveFromPool(
     seed,
     backgroundStyle,

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Bakes the README image library: every avatar variant, squish shape,
+ * Bakes the README image library: every avatar variant, duo shape,
  * expression, and background as a small standalone SVG in assets/gallery/,
  * then injects the gallery tables into README.md between markers.
  *
@@ -9,21 +9,21 @@
 import { writeFileSync, readFileSync, mkdirSync } from 'node:fs'
 import {
   createAvatar,
-  createSquish,
+  createDuo,
   listNovatarStyles,
   getAllAvatarDetails,
 } from '../dist/index.js'
 
 const catalog = listNovatarStyles()
 const avatarsCatalog = catalog.engines.find((e) => e.id === 'avatars')
-const squishCatalog = catalog.engines.find((e) => e.id === 'squish')
+const duoCatalog = catalog.engines.find((e) => e.id === 'duo')
 const details = Object.fromEntries(getAllAvatarDetails().map((d) => [d.id, d]))
 
 const AVATAR_SEED = 'orion'
 const SQUISH_SEED = 'novatar'
 
 mkdirSync('assets/gallery/avatars', { recursive: true })
-mkdirSync('assets/gallery/squish', { recursive: true })
+mkdirSync('assets/gallery/duo', { recursive: true })
 
 const write = (path, svg) => writeFileSync(path, svg)
 let bytes = 0
@@ -44,38 +44,38 @@ for (const [family, variants] of Object.entries(avatarsCatalog.families)) {
   )
 }
 
-// --- squish: shapes (rotating expressions for life) -------------------
+// --- duo: shapes (rotating expressions for life) -------------------
 const EXPRESSIONS = [
   'loving', 'happy', 'excited', 'curious', 'surprised', 'amazed', 'sleepy',
   'proud', 'shy', 'attentive', 'determined', 'laughing', 'guilty', 'bored',
   'angry', 'suspicious', 'confused', 'crazy', 'sad', 'doubtful', 'scared',
 ]
-const shapeCells = squishCatalog.shapes.map((shape, i) => {
+const shapeCells = duoCatalog.shapes.map((shape, i) => {
   const expression = EXPRESSIONS[i % EXPRESSIONS.length]
-  const svg = createSquish(SQUISH_SEED, { shape, expression, size: 96 })
+  const svg = createDuo(SQUISH_SEED, { shape, expression, size: 96 })
   bytes += svg.length
-  write(`assets/gallery/squish/shape-${shape}.svg`, svg)
-  return `<td align="center"><img src="assets/gallery/squish/shape-${shape}.svg" width="72" alt="${shape} shape" /><br /><sub><code>${shape}</code></sub></td>`
+  write(`assets/gallery/duo/shape-${shape}.svg`, svg)
+  return `<td align="center"><img src="assets/gallery/duo/shape-${shape}.svg" width="72" alt="${shape} shape" /><br /><sub><code>${shape}</code></sub></td>`
 })
 const shapeRows = shapeCells.map((_, i) => (i % 7 === 0 ? shapeCells.slice(i, i + 7) : null)).filter(Boolean)
 const shapesTable = shapeRows.map((row) => `<table><tr>\n${row.join('\n')}\n</tr></table>`).join('\n\n')
 
-// --- squish: expressions (one fixed shape isolates the difference) ----
-const expressionCells = squishCatalog.expressions.map((expression) => {
-  const svg = createSquish(SQUISH_SEED, { shape: 'circle', expression, size: 96 })
+// --- duo: expressions (one fixed shape isolates the difference) ----
+const expressionCells = duoCatalog.expressions.map((expression) => {
+  const svg = createDuo(SQUISH_SEED, { shape: 'circle', expression, size: 96 })
   bytes += svg.length
-  write(`assets/gallery/squish/expression-${expression}.svg`, svg)
-  return `<td align="center"><img src="assets/gallery/squish/expression-${expression}.svg" width="60" alt="${expression} expression" /><br /><sub><code>${expression}</code></sub></td>`
+  write(`assets/gallery/duo/expression-${expression}.svg`, svg)
+  return `<td align="center"><img src="assets/gallery/duo/expression-${expression}.svg" width="60" alt="${expression} expression" /><br /><sub><code>${expression}</code></sub></td>`
 })
 const expressionRows = expressionCells.map((_, i) => (i % 8 === 0 ? expressionCells.slice(i, i + 8) : null)).filter(Boolean)
 const expressionsTable = expressionRows.map((row) => `<table><tr>\n${row.join('\n')}\n</tr></table>`).join('\n\n')
 
-// --- squish: backgrounds ------------------------------------------------
-const backgroundCells = squishCatalog.backgrounds.map((background) => {
-  const svg = createSquish(SQUISH_SEED, { shape: 'circle', expression: 'neutral', backgroundStyle: background, size: 96 })
+// --- duo: backgrounds ------------------------------------------------
+const backgroundCells = duoCatalog.backgrounds.map((background) => {
+  const svg = createDuo(SQUISH_SEED, { shape: 'circle', expression: 'neutral', backgroundStyle: background, size: 96 })
   bytes += svg.length
-  write(`assets/gallery/squish/background-${background}.svg`, svg)
-  return `<td align="center"><img src="assets/gallery/squish/background-${background}.svg" width="72" alt="${background} background" /><br /><sub><code>${background}</code></sub></td>`
+  write(`assets/gallery/duo/background-${background}.svg`, svg)
+  return `<td align="center"><img src="assets/gallery/duo/background-${background}.svg" width="72" alt="${background} background" /><br /><sub><code>${background}</code></sub></td>`
 })
 const backgroundsTable = `<table><tr>\n${backgroundCells.join('\n')}\n</tr></table>`
 
@@ -87,7 +87,7 @@ All tiles use the same seed (\`${AVATAR_SEED}\`), so palette differences come fr
 
 ${familyTables.join('\n\n')}
 
-### squish engine — 21 shapes
+### duo engine — 21 shapes
 
 Seed \`${SQUISH_SEED}\`, rotating expressions to show a little life:
 

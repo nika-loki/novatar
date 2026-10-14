@@ -1,14 +1,14 @@
-import type { SquishShape, SquishTraits } from '../../types'
+import type { DuoShape, DuoTraits } from '../../types'
 import { circlePoint, pebblePoint, squirclePoint, capsulePoint } from './primitives'
 import { trianglePoint, hexagonPoint, squarePoint, pentagonPoint, octagonPoint, starPoint, flowerPoint, cloudPoint, dropPoint } from './polygons'
 import { catPoint, ghostPoint, ufoPoint, botPoint, alienPoint, lionPoint, monkeyPoint, mechaPoint } from './characters'
 
 export interface ShapeGeometry {
-  traits: SquishTraits
+  traits: DuoTraits
   point(angle: number): { x: number; y: number }
 }
 
-const SHAPE_MAP: Record<SquishShape, (traits: SquishTraits, angle: number) => { x: number; y: number }> = {
+const SHAPE_MAP: Record<DuoShape, (traits: DuoTraits, angle: number) => { x: number; y: number }> = {
   circle: circlePoint,
   pebble: pebblePoint,
   squircle: squirclePoint,
@@ -32,11 +32,11 @@ const SHAPE_MAP: Record<SquishShape, (traits: SquishTraits, angle: number) => { 
   mecha: mechaPoint,
 }
 
-export function shapeTraits(base: SquishTraits, _shape: SquishShape): SquishTraits {
+export function shapeTraits(base: DuoTraits, _shape: DuoShape): DuoTraits {
   return { ...base }
 }
 
-export function shapeGeometry(base: SquishTraits, shape: SquishShape): ShapeGeometry {
+export function shapeGeometry(base: DuoTraits, shape: DuoShape): ShapeGeometry {
   const traits = shapeTraits(base, shape)
   const pointAt = SHAPE_MAP[shape] ?? circlePoint
   return { traits, point: (angle) => pointAt(traits, angle) }

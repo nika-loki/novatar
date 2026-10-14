@@ -1,4 +1,4 @@
-import type { SquishOptions } from '../../types'
+import type { DuoOptions } from '../../types'
 import { solidMarkup } from './solid'
 import { taygetaMarkup } from './taygeta'
 import { maiaMarkup } from './maia'
@@ -6,7 +6,7 @@ import { meropeMarkup } from './merope'
 import { celaenoMarkup } from './celaeno'
 import { alcyoneMarkup } from './alcyone'
 
-export function backgroundMarkup(body: string, style: NonNullable<SquishOptions['backgroundStyle']>, palette: string[], uid: string, seed: number) {
+export function backgroundMarkup(body: string, style: NonNullable<DuoOptions['backgroundStyle']>, palette: string[], uid: string, seed: number) {
   if (style === 'solid') return solidMarkup()
   const clip = `${uid}-clip`
   const defs = `<clipPath id="${clip}" clipPathUnits="userSpaceOnUse"><path d="${body}"/></clipPath>`

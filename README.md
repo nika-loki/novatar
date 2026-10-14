@@ -28,7 +28,7 @@ Two engines, one identity model:
 | Engine       | Catalog                                                           |
 | ------------ | ----------------------------------------------------------------- |
 | `avatars`    | 21 variants · 4 families (gradient, fluid, classic, paletteless)  |
-| `squish` | 21 shapes × 22 expressions × 6 generative backgrounds             |
+| `duo` | 21 shapes × 22 expressions × 6 generative backgrounds             |
 
 ---
 
@@ -36,7 +36,7 @@ Two engines, one identity model:
 
 ```bash
 npx novatar justin > justin.svg                          # SVG to stdout
-npx novatar justin --engine squish --shape cat --expression loving
+npx novatar justin --engine duo --shape cat --expression loving
 npx novatar justin --engine avatars --variant triton --json
 npx novatar justin --png --size 512 --out avatar.png     # still PNG
 npx novatar justin --webp --quality 95 --out avatar.webp # still WebP
@@ -75,13 +75,13 @@ Works in Node ≥ 18, browser bundlers, Vercel Functions (Node & Edge for SVG), 
 ```ts
 import { createNovatar } from 'novatar'
 
-const svg = createNovatar({ seed: 'justin', engine: 'squish', shape: 'cat', expression: 'loving' })
+const svg = createNovatar({ seed: 'justin', engine: 'duo', shape: 'cat', expression: 'loving' })
 
 const json = createNovatar({ seed: 'justin', engine: 'avatars', variant: 'triton', format: 'json' })
 // { seed, engine, svg, dataUri, variant, circle, effect, animate }
 ```
 
-- `engine: 'auto'` (default) picks deterministically from the seed. Aliases: `squish`, `emoji`, `avatar`, `art`.
+- `engine: 'auto'` (default) picks deterministically from the seed. Aliases: `duo`, `emoji`, `avatar`, `art`.
 - Engine-specific options are ignored by the other engine, so one call shape covers both.
 
 ### Engine compat APIs
@@ -90,7 +90,7 @@ The full upstream surfaces are preserved for drop-in migration:
 
 ```ts
 import { createAvatar, resolveVariant } from 'novatar'            // avatars-engine API
-import { createSquish, resolveLayout, renderLayout, SquishEngine } from 'novatar' // squish-engine API
+import { createDuo, resolveLayout, renderLayout, DuoEngine } from 'novatar' // duo-engine API
 ```
 
 ### Introspection & palettes
@@ -99,7 +99,7 @@ import { createSquish, resolveLayout, renderLayout, SquishEngine } from 'novatar
 import { listNovatarStyles, generatePalette } from 'novatar'
 
 listNovatarStyles()        // { engines: [{ id, variants | shapes, expressions, backgrounds }] }
-listNovatarStyles('squish')
+listNovatarStyles('duo')
 generatePalette('justin')  // { seed, colors: [ '#..', ×5 ] } — deterministic
 ```
 
@@ -116,12 +116,12 @@ const gif = await renderAnimatedGif({ seed: 'justin', width: 256, fps: 12 })
 const apng = await renderAnimatedApng({ seed: 'justin', width: 256 })    // full alpha
 ```
 
-Animated exports reproduce the `<Squish />` motion (autonomous blinking
+Animated exports reproduce the `<Duo />` motion (autonomous blinking
 + gaze drift, optional `wobble`) from one frame solver, so every format
 moves identically. Loops are locked to the 4.7 s blink cycle — `duration` is
 snapped to a multiple of it so GIF/APNG wraps are seamless. GIF composites
 transparency onto a `gifBackground` matte (1-bit alpha); APNG and animated
-SVG keep full alpha. Animated raster exports use the squish engine
+SVG keep full alpha. Animated raster exports use the duo engine
 (the avatars engine's CSS animation cannot be time-sampled by rasterizers).
 
 ---
@@ -129,14 +129,14 @@ SVG keep full alpha. Animated raster exports use the squish engine
 ## React
 
 ```tsx
-import { Novatar, Avatar, Squish } from 'novatar/react'
+import { Novatar, Avatar, Duo } from 'novatar/react'
 
-<Novatar seed="justin" engine="squish" shape="cat" size={64} />
+<Novatar seed="justin" engine="duo" shape="cat" size={64} />
 <Avatar name="orion" variant={/* 'triton' | family | 'all' */ 'fluid'} animate />
-<Squish seed="justin" shape="cat" expression="loving" animate animOnClick animOnHover />
+<Duo seed="justin" shape="cat" expression="loving" animate animOnClick animOnHover />
 ```
 
-`<Squish />` is the fully alive experience: breathing, gaze drift, blinks,
+`<Duo />` is the fully alive experience: breathing, gaze drift, blinks,
 hover/click reactions, reduced-motion aware. `<Avatar />` and `<Novatar />` render
 static markup (SSR-safe). React 18+ is an optional peer dependency — the core
 never imports it.
@@ -154,7 +154,7 @@ export const GET = createNovatarHandler({ base: '/api/avatar' })
 
 ```html
 <img src="https://your-app.vercel.app/api/avatar/orion.svg" />
-<img src="https://your-app.vercel.app/api/avatar/justin.png?engine=squish&shape=cat&expression=loving" />
+<img src="https://your-app.vercel.app/api/avatar/justin.png?engine=duo&shape=cat&expression=loving" />
 ```
 
 Deterministic responses ship with `Cache-Control: immutable`. See
@@ -171,7 +171,7 @@ animated SVG blinks via SMIL, no hydration):
 ```astro
 ---
 import { createNovatar, renderAnimatedSvg } from 'novatar'
-const avatar = createNovatar({ seed: 'justin', engine: 'squish', shape: 'cat', expression: 'loving' })
+const avatar = createNovatar({ seed: 'justin', engine: 'duo', shape: 'cat', expression: 'loving' })
 const animated = renderAnimatedSvg({ seed: 'hero', shape: 'ufo' })
 ---
 <Fragment set:html={avatar} />
@@ -195,7 +195,7 @@ export const GET: APIRoute = (ctx) => handler(ctx.request)
 `astro dev` serves the endpoint as-is; `astro build` needs any adapter (e.g.
 `@astrojs/node`) for on-demand routes. The React components from
 `novatar/react` also work through `@astrojs/react` when you want interactive
-islands (`<Squish client:load />`). Complete working project:
+islands (`<Duo client:load />`). Complete working project:
 [examples/astro](./examples/astro).
 
 ---
@@ -248,38 +248,38 @@ All tiles use the same seed (`orion`), so palette differences come from the vari
 <td align="center"><img src="assets/gallery/avatars/kendo.svg" width="72" alt="kendo avatar" /><br /><sub><code>kendo</code> <i>(ink-only)</i></sub></td>
 </tr></table>
 
-### squish engine — 21 shapes
+### duo engine — 21 shapes
 
 Seed `novatar`, rotating expressions to show a little life:
 
 <table><tr>
-<td align="center"><img src="assets/gallery/squish/shape-circle.svg" width="72" alt="circle shape" /><br /><sub><code>circle</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-pebble.svg" width="72" alt="pebble shape" /><br /><sub><code>pebble</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-squircle.svg" width="72" alt="squircle shape" /><br /><sub><code>squircle</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-capsule.svg" width="72" alt="capsule shape" /><br /><sub><code>capsule</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-triangle.svg" width="72" alt="triangle shape" /><br /><sub><code>triangle</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-hexagon.svg" width="72" alt="hexagon shape" /><br /><sub><code>hexagon</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-cloud.svg" width="72" alt="cloud shape" /><br /><sub><code>cloud</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-circle.svg" width="72" alt="circle shape" /><br /><sub><code>circle</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-pebble.svg" width="72" alt="pebble shape" /><br /><sub><code>pebble</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-squircle.svg" width="72" alt="squircle shape" /><br /><sub><code>squircle</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-capsule.svg" width="72" alt="capsule shape" /><br /><sub><code>capsule</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-triangle.svg" width="72" alt="triangle shape" /><br /><sub><code>triangle</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-hexagon.svg" width="72" alt="hexagon shape" /><br /><sub><code>hexagon</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-cloud.svg" width="72" alt="cloud shape" /><br /><sub><code>cloud</code></sub></td>
 </tr></table>
 
 <table><tr>
-<td align="center"><img src="assets/gallery/squish/shape-drop.svg" width="72" alt="drop shape" /><br /><sub><code>drop</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-square.svg" width="72" alt="square shape" /><br /><sub><code>square</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-pentagon.svg" width="72" alt="pentagon shape" /><br /><sub><code>pentagon</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-octagon.svg" width="72" alt="octagon shape" /><br /><sub><code>octagon</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-star.svg" width="72" alt="star shape" /><br /><sub><code>star</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-cat.svg" width="72" alt="cat shape" /><br /><sub><code>cat</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-ghost.svg" width="72" alt="ghost shape" /><br /><sub><code>ghost</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-drop.svg" width="72" alt="drop shape" /><br /><sub><code>drop</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-square.svg" width="72" alt="square shape" /><br /><sub><code>square</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-pentagon.svg" width="72" alt="pentagon shape" /><br /><sub><code>pentagon</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-octagon.svg" width="72" alt="octagon shape" /><br /><sub><code>octagon</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-star.svg" width="72" alt="star shape" /><br /><sub><code>star</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-cat.svg" width="72" alt="cat shape" /><br /><sub><code>cat</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-ghost.svg" width="72" alt="ghost shape" /><br /><sub><code>ghost</code></sub></td>
 </tr></table>
 
 <table><tr>
-<td align="center"><img src="assets/gallery/squish/shape-ufo.svg" width="72" alt="ufo shape" /><br /><sub><code>ufo</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-flower.svg" width="72" alt="flower shape" /><br /><sub><code>flower</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-bot.svg" width="72" alt="bot shape" /><br /><sub><code>bot</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-alien.svg" width="72" alt="alien shape" /><br /><sub><code>alien</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-lion.svg" width="72" alt="lion shape" /><br /><sub><code>lion</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-monkey.svg" width="72" alt="monkey shape" /><br /><sub><code>monkey</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/shape-mecha.svg" width="72" alt="mecha shape" /><br /><sub><code>mecha</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-ufo.svg" width="72" alt="ufo shape" /><br /><sub><code>ufo</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-flower.svg" width="72" alt="flower shape" /><br /><sub><code>flower</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-bot.svg" width="72" alt="bot shape" /><br /><sub><code>bot</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-alien.svg" width="72" alt="alien shape" /><br /><sub><code>alien</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-lion.svg" width="72" alt="lion shape" /><br /><sub><code>lion</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-monkey.svg" width="72" alt="monkey shape" /><br /><sub><code>monkey</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/shape-mecha.svg" width="72" alt="mecha shape" /><br /><sub><code>mecha</code></sub></td>
 </tr></table>
 
 ### 22 expressions
@@ -287,45 +287,45 @@ Seed `novatar`, rotating expressions to show a little life:
 Same seed and shape — only the expression changes:
 
 <table><tr>
-<td align="center"><img src="assets/gallery/squish/expression-neutral.svg" width="60" alt="neutral expression" /><br /><sub><code>neutral</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-attentive.svg" width="60" alt="attentive expression" /><br /><sub><code>attentive</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-surprised.svg" width="60" alt="surprised expression" /><br /><sub><code>surprised</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-excited.svg" width="60" alt="excited expression" /><br /><sub><code>excited</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-happy.svg" width="60" alt="happy expression" /><br /><sub><code>happy</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-laughing.svg" width="60" alt="laughing expression" /><br /><sub><code>laughing</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-angry.svg" width="60" alt="angry expression" /><br /><sub><code>angry</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-sad.svg" width="60" alt="sad expression" /><br /><sub><code>sad</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-neutral.svg" width="60" alt="neutral expression" /><br /><sub><code>neutral</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-attentive.svg" width="60" alt="attentive expression" /><br /><sub><code>attentive</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-surprised.svg" width="60" alt="surprised expression" /><br /><sub><code>surprised</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-excited.svg" width="60" alt="excited expression" /><br /><sub><code>excited</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-happy.svg" width="60" alt="happy expression" /><br /><sub><code>happy</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-laughing.svg" width="60" alt="laughing expression" /><br /><sub><code>laughing</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-angry.svg" width="60" alt="angry expression" /><br /><sub><code>angry</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-sad.svg" width="60" alt="sad expression" /><br /><sub><code>sad</code></sub></td>
 </tr></table>
 
 <table><tr>
-<td align="center"><img src="assets/gallery/squish/expression-scared.svg" width="60" alt="scared expression" /><br /><sub><code>scared</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-suspicious.svg" width="60" alt="suspicious expression" /><br /><sub><code>suspicious</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-confused.svg" width="60" alt="confused expression" /><br /><sub><code>confused</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-curious.svg" width="60" alt="curious expression" /><br /><sub><code>curious</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-proud.svg" width="60" alt="proud expression" /><br /><sub><code>proud</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-shy.svg" width="60" alt="shy expression" /><br /><sub><code>shy</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-bored.svg" width="60" alt="bored expression" /><br /><sub><code>bored</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-sleepy.svg" width="60" alt="sleepy expression" /><br /><sub><code>sleepy</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-scared.svg" width="60" alt="scared expression" /><br /><sub><code>scared</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-suspicious.svg" width="60" alt="suspicious expression" /><br /><sub><code>suspicious</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-confused.svg" width="60" alt="confused expression" /><br /><sub><code>confused</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-curious.svg" width="60" alt="curious expression" /><br /><sub><code>curious</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-proud.svg" width="60" alt="proud expression" /><br /><sub><code>proud</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-shy.svg" width="60" alt="shy expression" /><br /><sub><code>shy</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-bored.svg" width="60" alt="bored expression" /><br /><sub><code>bored</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-sleepy.svg" width="60" alt="sleepy expression" /><br /><sub><code>sleepy</code></sub></td>
 </tr></table>
 
 <table><tr>
-<td align="center"><img src="assets/gallery/squish/expression-crazy.svg" width="60" alt="crazy expression" /><br /><sub><code>crazy</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-loving.svg" width="60" alt="loving expression" /><br /><sub><code>loving</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-determined.svg" width="60" alt="determined expression" /><br /><sub><code>determined</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-guilty.svg" width="60" alt="guilty expression" /><br /><sub><code>guilty</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-amazed.svg" width="60" alt="amazed expression" /><br /><sub><code>amazed</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/expression-doubtful.svg" width="60" alt="doubtful expression" /><br /><sub><code>doubtful</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-crazy.svg" width="60" alt="crazy expression" /><br /><sub><code>crazy</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-loving.svg" width="60" alt="loving expression" /><br /><sub><code>loving</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-determined.svg" width="60" alt="determined expression" /><br /><sub><code>determined</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-guilty.svg" width="60" alt="guilty expression" /><br /><sub><code>guilty</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-amazed.svg" width="60" alt="amazed expression" /><br /><sub><code>amazed</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/expression-doubtful.svg" width="60" alt="doubtful expression" /><br /><sub><code>doubtful</code></sub></td>
 </tr></table>
 
 ### 6 generative backgrounds
 
 <table><tr>
-<td align="center"><img src="assets/gallery/squish/background-solid.svg" width="72" alt="solid background" /><br /><sub><code>solid</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/background-taygeta.svg" width="72" alt="taygeta background" /><br /><sub><code>taygeta</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/background-maia.svg" width="72" alt="maia background" /><br /><sub><code>maia</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/background-merope.svg" width="72" alt="merope background" /><br /><sub><code>merope</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/background-celaeno.svg" width="72" alt="celaeno background" /><br /><sub><code>celaeno</code></sub></td>
-<td align="center"><img src="assets/gallery/squish/background-alcyone.svg" width="72" alt="alcyone background" /><br /><sub><code>alcyone</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/background-solid.svg" width="72" alt="solid background" /><br /><sub><code>solid</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/background-taygeta.svg" width="72" alt="taygeta background" /><br /><sub><code>taygeta</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/background-maia.svg" width="72" alt="maia background" /><br /><sub><code>maia</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/background-merope.svg" width="72" alt="merope background" /><br /><sub><code>merope</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/background-celaeno.svg" width="72" alt="celaeno background" /><br /><sub><code>celaeno</code></sub></td>
+<td align="center"><img src="assets/gallery/duo/background-alcyone.svg" width="72" alt="alcyone background" /><br /><sub><code>alcyone</code></sub></td>
 </tr></table>
 <!-- novatar:gallery:end -->
 

@@ -1,9 +1,9 @@
-import type { SquishTraits } from '../../types'
+import type { DuoTraits } from '../../types'
 
 const wave = (angle: number, frequency: number, cosine = 0, sine = 0) =>
   cosine * Math.cos(angle * frequency) + sine * Math.sin(angle * frequency)
 
-function polarPoint(angle: number, radius: number, traits: SquishTraits) {
+function polarPoint(angle: number, radius: number, traits: DuoTraits) {
   return { x: traits.width * Math.cos(angle) * radius, y: traits.height * Math.sin(angle) * radius }
 }
 
@@ -42,7 +42,7 @@ const botRadius = (a: number) => 0.894271 + wave(a, 1, 0, 0.0773445) + wave(a, 2
 /**
  * Returns the procedural edge point for the 'alien' shape.
  */
-export function alienPoint(traits: SquishTraits, angle: number) {
+export function alienPoint(traits: DuoTraits, angle: number) {
   const radius = 0.843547 + 0.126532 * Math.sin(angle * 3) + 0.030562 * Math.cos(angle * 7) - 0.078627 * Math.sin(angle * 7)
   return polarPoint(angle, radius, traits)
 }
@@ -79,16 +79,16 @@ const mechaRadius = (a: number) => 0.8270027 + wave(a, 1, 0, 0.1503181) + wave(a
   wave(a, 15, 0, 0.0014958) + wave(a, 16, -0.0007349)
 
 /** Returns the procedural edge point for the 'cat' shape. */
-export function catPoint(traits: SquishTraits, angle: number) { return polarPoint(angle, catRadius(angle), traits) }
+export function catPoint(traits: DuoTraits, angle: number) { return polarPoint(angle, catRadius(angle), traits) }
 /** Returns the procedural edge point for the 'ghost' shape. */
-export function ghostPoint(traits: SquishTraits, angle: number) { return polarPoint(angle, ghostRadius(angle), traits) }
+export function ghostPoint(traits: DuoTraits, angle: number) { return polarPoint(angle, ghostRadius(angle), traits) }
 /** Returns the procedural edge point for the 'ufo' shape. */
-export function ufoPoint(traits: SquishTraits, angle: number) { return polarPoint(angle, ufoRadius(angle), traits) }
+export function ufoPoint(traits: DuoTraits, angle: number) { return polarPoint(angle, ufoRadius(angle), traits) }
 /** Returns the procedural edge point for the 'bot' shape. */
-export function botPoint(traits: SquishTraits, angle: number) { return polarPoint(angle, botRadius(angle), traits) }
+export function botPoint(traits: DuoTraits, angle: number) { return polarPoint(angle, botRadius(angle), traits) }
 /** Returns the procedural edge point for the 'lion' shape. */
-export function lionPoint(traits: SquishTraits, angle: number) { return polarPoint(angle, lionRadius(angle), traits) }
+export function lionPoint(traits: DuoTraits, angle: number) { return polarPoint(angle, lionRadius(angle), traits) }
 /** Returns the procedural edge point for the 'monkey' shape. */
-export function monkeyPoint(traits: SquishTraits, angle: number) { return polarPoint(angle, monkeyRadius(angle), traits) }
+export function monkeyPoint(traits: DuoTraits, angle: number) { return polarPoint(angle, monkeyRadius(angle), traits) }
 /** Returns the procedural edge point for the 'mecha' shape. */
-export function mechaPoint(traits: SquishTraits, angle: number) { return polarPoint(angle, mechaRadius(angle), traits) }
+export function mechaPoint(traits: DuoTraits, angle: number) { return polarPoint(angle, mechaRadius(angle), traits) }

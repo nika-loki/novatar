@@ -1,4 +1,4 @@
-import type { SquishTraits } from '../types'
+import type { DuoTraits } from '../types'
 import { seedNumber, unit, between } from '../core/hash'
 import type { ShapeGeometry } from './shapes'
 
@@ -8,9 +8,9 @@ export type FittedEye = {
   matrix: [number, number, number, number, number, number]
 }
 
-export function traitsFor(name: string, overrides: Partial<SquishTraits> = {}): SquishTraits {
+export function traitsFor(name: string, overrides: Partial<DuoTraits> = {}): DuoTraits {
   const seed = seedNumber(name)
-  const generated: SquishTraits = {
+  const generated: DuoTraits = {
     width: 1,
     height: 1,
     softness: 0.56,

@@ -1,6 +1,6 @@
 export { Avatar } from './Avatar'
 export type { AvatarProps } from './Avatar'
-export { Squish, Squish as SquishAvatar } from './Squish'
-export type { SquishProps } from './Squish'
+export { Duo, Duo as DuoAvatar } from './Duo'
+export type { DuoProps } from './Duo'
 export { Novatar } from './Novatar'
 export type { NovatarProps } from './Novatar'

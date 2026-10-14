@@ -1,19 +1,19 @@
 /**
- * Squish engine — adapted from SpaceUI (MIT).
+ * Duo engine — adapted from SpaceUI (MIT).
  * 21 body shapes × 22 expressions × 6 generative backgrounds.
  */
 export { resolveLayout, buildLayout } from './engine/layout'
-export { renderLayout, createAvatar as createSquish } from './core/render'
+export { renderLayout, createAvatar as createDuo } from './core/render'
 export { capsulePath } from './core/geometry'
 export {
   resolveShape,
   resolveExpression,
   resolveBackgroundStyle,
 } from './core/resolve'
-export { SquishEngine } from './engine/animation'
+export { DuoEngine } from './engine/animation'
 export {
   DEFAULT_SEED,
-  SquishOutputFormat,
+  DuoOutputFormat,
   SHAPES,
   EXPRESSIONS,
   BACKGROUND_STYLES,
@@ -28,15 +28,15 @@ export {
   DEFAULT_BACKGROUND_STYLE,
 } from './types'
 export type {
-  SquishShape,
-  SquishExpression,
-  SquishBackgroundStyle,
-  SquishShapeChoice,
-  SquishExpressionChoice,
-  SquishBackgroundStyleChoice,
-  SquishCatalogPick,
-  SquishOptions,
-  SquishJson,
-  SquishLayout,
-  SquishTraits,
+  DuoShape,
+  DuoExpression,
+  DuoBackgroundStyle,
+  DuoShapeChoice,
+  DuoExpressionChoice,
+  DuoBackgroundStyleChoice,
+  DuoCatalogPick,
+  DuoOptions,
+  DuoJson,
+  DuoLayout,
+  DuoTraits,
 } from './types'

@@ -84,12 +84,12 @@ export const DEFAULT_BACKGROUND_STYLE = BACKGROUND_STYLES.solid;
 /**
  * Valid types for the avatar rendering.
  */
-export type SquishBackgroundStyle = keyof typeof BACKGROUND_STYLES;
-export type SquishExpression = keyof typeof EXPRESSIONS;
-export type SquishShape = keyof typeof SHAPES;
-export type SquishCatalogPick = "all";
-export type SquishShapeChoice = SquishShape | SquishCatalogPick;
-export type SquishExpressionChoice = SquishExpression | SquishCatalogPick;
-export type SquishBackgroundStyleChoice =
-  | SquishBackgroundStyle
-  | SquishCatalogPick;
+export type DuoBackgroundStyle = keyof typeof BACKGROUND_STYLES;
+export type DuoExpression = keyof typeof EXPRESSIONS;
+export type DuoShape = keyof typeof SHAPES;
+export type DuoCatalogPick = "all";
+export type DuoShapeChoice = DuoShape | DuoCatalogPick;
+export type DuoExpressionChoice = DuoExpression | DuoCatalogPick;
+export type DuoBackgroundStyleChoice =
+  | DuoBackgroundStyle
+  | DuoCatalogPick;

@@ -5,12 +5,12 @@ import { resolveExpression, resolveShape } from "../core/resolve";
 import { traitsFor, fitEyesToShape, type FittedEye } from "./face";
 import { shapeGeometry, type ShapeGeometry } from "./shapes";
 import { expressionPose, type ExpressionPose } from "./expressions";
-import { type SquishLayout, type SquishOptions } from "../types";
+import { type DuoLayout, type DuoOptions } from "../types";
 
 export function resolveLayout(
   name: string,
-  options: SquishOptions = {},
-): SquishLayout {
+  options: DuoOptions = {},
+): DuoLayout {
   const base = traitsFor(name);
   return buildLayout(
     name,
@@ -27,7 +27,7 @@ export function buildLayout(
   expression: ExpressionPose,
   adjustEyes?: (eyes: FittedEye[]) => FittedEye[],
   colors?: readonly string[],
-): SquishLayout {
+): DuoLayout {
   const traits = geometry.traits;
   const resolvedColors = colorsFor(name, colors);
   const eyes = [-1, 1].map((_, index) => {

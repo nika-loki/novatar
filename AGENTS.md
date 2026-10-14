@@ -27,17 +27,17 @@ npx novatar justin --png --out a.png
 
 ```
 novatar [seed] [options]
-  --engine avatars|squish|auto     default auto (deterministic from seed)
+  --engine avatars|duo|auto     default auto (deterministic from seed)
   --variant <id|family|all>            [avatars]
-  --shape <id|all>                     [squish]
-  --expression <id|all>                [squish]
-  --background <id|all>                [squish]
+  --shape <id|all>                     [duo]
+  --expression <id|all>                [duo]
+  --background <id|all>                [duo]
   --size <1..4096>
   --circle                             [avatars] clip to circle
   --effect none|noise                  [avatars]
   --colors <hex,hex,hex,hex,hex>       exactly 5, both engines (overrides seeded palette)
   --format svg|json|png|webp|gif|apng  shorthands: --json --png --webp --gif --apng
-                                       gif/apng are ANIMATED (squish engine)
+                                       gif/apng are ANIMATED (duo engine)
   --animate                            with svg/json: animated (SMIL) SVG
   --fps <1..60>                        animated exports, default 12
   --duration <seconds>                 loop length, snapped to the 4.7s blink cycle
@@ -56,7 +56,7 @@ novatar [seed] [options]
 ```
 
 Animated exports (gif / apng / `--animate`) reproduce the React
-`<Squish />` motion — autonomous blinking + gaze drift, optional wobble —
+`<Duo />` motion — autonomous blinking + gaze drift, optional wobble —
 from one frame solver, so every format moves identically, and loops are
 seamless (blink cycle 4.7 s). GIF composites transparency onto the
 `--gif-bg` matte; APNG and animated SVG keep full alpha. WebP stills use the
@@ -76,10 +76,10 @@ The CLI never prompts and never touches the network.
 ```bash
 # Discover valid ids before generating
 npx novatar --list
-npx novatar --list --engine squish
+npx novatar --list --engine duo
 
-# Squishy character, exact control
-npx novatar justin --engine squish --shape cat --expression loving --background taygeta --size 256 --out justin.svg
+# Duo character, exact control
+npx novatar justin --engine duo --shape cat --expression loving --background taygeta --size 256 --out justin.svg
 
 # Abstract avatar across a family (deterministic pick from seed)
 npx novatar justin --engine avatars --variant fluid --json
@@ -108,7 +108,7 @@ npx novatar justin --gif --fps 20 --duration 9.4  # smoother, two blink cycles
 npx novatar justin --webp --quality 95 --out a.webp
 
 # Custom palette on any engine (geometry stays seed-driven)
-npx novatar justin --engine squish --shape cat --colors '#ff9a3c,#ff5c8a,#c13584,#701a75,#fde68a'
+npx novatar justin --engine duo --shape cat --colors '#ff9a3c,#ff5c8a,#c13584,#701a75,#fde68a'
 
 # Stable identity from a pipeline id
 echo "$USER_ID" | npx novatar - --json
@@ -126,7 +126,7 @@ echo "$USER_ID" | npx novatar - --json
 
 1. **External URL (simplest).** Notion image blocks accept external URLs.
    Deploy [examples/vercel-api](./examples/vercel-api) once, then attach:
-   `https://<app>.vercel.app/api/avatar/<seed>.png?engine=squish&shape=cat`
+   `https://<app>.vercel.app/api/avatar/<seed>.png?engine=duo&shape=cat`
 2. **File upload.** Generate a PNG with the CLI and upload it through the
    Notion API file-upload endpoint, then attach the upload to an image block.
 3. **Inline data URI.** `--json` output includes `dataUri`; usable in HTML,
@@ -153,7 +153,7 @@ full metadata including `dataUri`.
 
 ## Valid ids (quick reference)
 
-- **engines:** `avatars`, `squish` (aliases `squish`, `emoji`; `auto` = deterministic pick)
+- **engines:** `avatars`, `duo` (aliases `duo`, `emoji`; `auto` = deterministic pick)
 - **avatars variants:** `lumina` `shaula` `singularity` `triton` `solar-flare` `titan` `glass` `splash` `animals` `astronaut` `ghost` `bot` `glitch` `pebble` `invader` `grunge` `bored` `doodle` `squiggle` `critter` `kendo`; families `gradient` `fluid` `classic` `paletteless`; or `all`
 - **shapes:** `circle` `pebble` `squircle` `capsule` `triangle` `hexagon` `cloud` `drop` `square` `pentagon` `octagon` `star` `flower` `cat` `ghost` `ufo` `bot` `alien` `lion` `monkey` `mecha`
 - **expressions:** `neutral` `happy` `sad` `excited` `angry` `loving` `surprised` `laughing` `scared` `suspicious` `confused` `curious` `proud` `shy` `bored` `sleepy` `crazy` `determined` `guilty` `amazed` `doubtful` `attentive`
@@ -174,10 +174,10 @@ full metadata including `dataUri`.
 | Message                                             | Fix                                        |
 | --------------------------------------------------- | ------------------------------------------ |
 | `Unknown avatar variant or family: X`               | pick ids from `--list`                     |
-| `Unknown shape/expression/background style: X`       | pick ids from `--list --engine squish` |
-| `Unknown engine: X`                                 | `avatars`, `squish`, or `auto`         |
+| `Unknown shape/expression/background style: X`       | pick ids from `--list --engine duo` |
+| `Unknown engine: X`                                 | `avatars`, `duo`, or `auto`         |
 | `--colors needs exactly 5 …`                        | pass 5 comma-separated hex colors          |
-| `animated raster exports (gif/apng) require the squish engine` | drop `--engine avatars` or pick a still format |
+| `animated raster exports (gif/apng) require the duo engine` | drop `--engine avatars` or pick a still format |
 | `--animate applies to svg, json, gif, and apng …`   | still formats cannot animate               |
 | `WebP export needs the optional "sharp" …`          | `npm install sharp` (prebuilt, no compile) |
 | `batch … needs --out with a "{seed}" placeholder`   | add `--out 'dir/{seed}.png'`               |
