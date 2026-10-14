@@ -1,7 +1,7 @@
 {
   "name": "novatar",
   "version": "0.2.0",
-  "description": "Deterministic generative SVG avatar engine for humans and AI agents. CLI + MCP + React + HTTP, zero-config npx.",
+  "description": "Deterministic generative SVG avatar engine for humans and AI agents. CLI + MCP + React + HTTP, zero-config npx. Playground: notionduo.com/novatar",
   "author": {
     "name": "Justin Cheu",
     "email": "justin@notionduo.com"
